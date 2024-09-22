@@ -61,7 +61,7 @@ Insert gif or link to demo
 
 
 
-### Languages and Tools:
+# Languages and Tools
 
 #### Backend
 <a href="https://www.python.org" target="_blank" rel="noreferrer">
