@@ -51,7 +51,7 @@ Insert gif or link to demo
 
     ![LANDINGPAGE](./landingpage_GIF.gif)
 
-- ####dashboard/voting page
+- #### dashboard/voting page
 
     ![DASHBOARDVOTINGPAGE](./dashboardvotingpage_GIF.gif)
 
