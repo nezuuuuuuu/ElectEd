@@ -4,11 +4,6 @@
 ElectEd is a secure voting platform for students, designed to replace traditional methods with a more reliable, transparent, and user-friendly solution.
 
 
-## Demo
-
-Insert gif or link to demo
-
-
 ## Functional Requirements
 
 - #### User Authentication
@@ -94,4 +89,15 @@ Insert gif or link to demo
     <img src="https://www.vectorlogo.zone/logos/figma/figma-icon.svg" alt="figma" width="40" height="40"/>
 </a>
 
+
+
+# LINKS
+- ### ERD
+    <a href="https://lucid.app/lucidchart/6e09249c-0f5d-4596-8974-a15dbbba42b6/edit?viewport_loc=-1128%2C-686%2C3054%2C1441%2C0_0&invitationId=inv_816a19d8-e5e5-4b98-b584-7c563652fcbf">
+    Elected-ERD
+    </a>
+- ### UI/UX
+    <a href="https://www.figma.com/design/7Ea0jiaHDyttc6uYgjvAzE/FIGMA-PROJECTS?node-id=746-955&t=6q5gjlDmc9mi06Cr-1">
+    Elected-UI/UX
+    </a>
 
