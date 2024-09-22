@@ -48,7 +48,10 @@ Insert gif or link to demo
 ![ERD](ERD.png)
 ## User Interface
 **landing page**
+
 ![LANDINGPAGE](./landingpage_GIF.gif)
+
 **dashboard/voting page**
+
 ![DASHBOARDVOTINGPAGE](./dashboardvotingpage_GIF.gif)
 
