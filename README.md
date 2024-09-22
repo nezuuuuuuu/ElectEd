@@ -4,11 +4,6 @@
 ElectEd is a secure voting platform for students, designed to replace traditional methods with a more reliable, transparent, and user-friendly solution.
 
 
-## Demo
-
-Insert gif or link to demo
-
-
 ## Functional Requirements
 
 - #### User Authentication
