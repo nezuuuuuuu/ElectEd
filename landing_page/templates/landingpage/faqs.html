@@ -1,7 +1,75 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block title %}Frequently Asked Questions {% endblock %}
 
 {% block content %}
-    <h1 class="bg-slate-300">FAQS PAGE NIIIIIIii</h1>
+    <section class='flex flex-col justify-center py-12 xl:py-0'>
+        <!-- {/* BACKGROUND */} -->
+        <div class="absolute inset-0 w-full h-full -z-10">
+            <img 
+                src="{% static 'landingpics/faqsbg.png' %}" 
+                class="object-cover w-full"
+                alt="Contact Us Background" 
+            />
+        </div>
+
+        <!-- {/* FREQUENTLY ASKED QUESTIONS */} -->
+        <div class="container flex items-end justify-end w-full pb-32 text-maroon pt-28">
+            <h1 class='text-6xl font-bold text-end'>FREQUENTLY <br /> ASKED QUESTIONS</h1>
+        </div>
+
+
+
+
+        <!-- {/* ACCORDIONS */} -->
+        <div class='p-10 bg-gradient-to-r from-dmaroon to-maroon text-white2' >
+            <div class='container my-14'>
+                <!-- Accordion Section -->
+            <div id="accordionExample">
+                <!-- Accordion Item 1 -->
+                <div class="border-b-2 border-white2">
+                    <h2>
+                        <a 
+                            href="#accordionItem1" 
+                            class="block w-full py-4 text-xl font-bold text-left text-white2 focus:outline-none">
+                            What is ElectEd?
+                        </a>
+                    </h2>
+                    <div id="accordionItem1" class="py-4 transition-all hidden-target">
+                        ElectEd is an advanced online voting platform built for educational institutions, offering secure and transparent elections.
+                    </div>
+                </div>
+
+                <!-- Accordion Item 2 -->
+                <div class="border-b-2 border-white2">
+                    <h2>
+                        <a 
+                            href="#accordionItem2" 
+                            class="block w-full py-4 text-xl font-bold text-left text-white2 focus:outline-none">
+                            How secure is the voting platform?
+                        </a>
+                    </h2>
+                    <div id="accordionItem2" class="py-4 transition-all hidden-target">
+                        Our platform implements the latest encryption and security protocols to ensure that all votes are secure and confidential.
+                    </div>
+                </div>
+
+                <!-- Accordion Item 3 -->
+                <div class="border-b-2 border-white2">
+                    <h2>
+                        <a 
+                            href="#accordionItem3" 
+                            class="block w-full py-4 text-xl font-bold text-left text-white2 focus:outline-none">
+                            Can ElectEd handle large elections?
+                        </a>
+                    </h2>
+                    <div id="accordionItem3" class="py-4 transition-all hidden-target">
+                        Yes, ElectEd is designed to handle elections of all sizes, from small student council elections to large-scale university elections.
+                    </div>
+                </div>
+            </div>
+        </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}

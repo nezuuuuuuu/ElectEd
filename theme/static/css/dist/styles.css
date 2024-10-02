@@ -803,6 +803,10 @@ body {
   border-width: 0;
 }
 
+.overflow-hidden {
+  overflow: hidden;
+}
+
 .visible {
   visibility: visible;
 }
@@ -945,6 +949,14 @@ body {
   height: 3.5rem;
 }
 
+.h-40 {
+  height: 10rem;
+}
+
+.h-60 {
+  height: 15rem;
+}
+
 .h-20 {
   height: 5rem;
 }
@@ -967,6 +979,14 @@ body {
 
 .w-8 {
   width: 2rem;
+}
+
+.w-40 {
+  width: 10rem;
+}
+
+.w-48 {
+  width: 12rem;
 }
 
 .w-\[45\%\] {
@@ -1000,6 +1020,10 @@ body {
 
 .border-collapse {
   border-collapse: collapse;
+}
+
+.border-maroon {
+  border-color: #A41C30;
 }
 
 .transform {
@@ -1080,6 +1104,10 @@ body {
 
 .border-2 {
   border-width: 2px;
+}
+
+.border-4 {
+  border-width: 4px;
 }
 
 .border-b-2 {
@@ -1165,6 +1193,9 @@ body {
   -o-object-fit: cover;
      object-fit: cover;
 }
+.p-2 {
+  padding: 0.5rem;
+}
 
 .p-10 {
   padding: 2.5rem;
@@ -1211,6 +1242,11 @@ body {
 .py-1 {
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
+}
+
+.py-10 {
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
 }
 
 .py-14 {

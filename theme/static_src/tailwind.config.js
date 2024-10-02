@@ -62,7 +62,7 @@ module.exports = {
                 dmaroon: '#521018',
                 maroon: '#A41C30',
                 white2: '#FFFEFC',
-                itom: '#28282B'
+                itom: '#28282B',
             },
         },
     },
