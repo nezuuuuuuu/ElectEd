@@ -42,7 +42,30 @@ module.exports = {
         // '../../**/*.py'
     ],
     theme: {
-        extend: {},
+        container: {
+            center: 'true',
+            padding: '15px'
+        },
+        
+        screens: {
+            sm: '640px',
+            md: '768px',
+            lg: '960px',
+            xl: '1200px'
+        },
+
+        extend: {
+            fontFamily: {
+                samsung: ['"Samsung Sharp Sans"', 'sans-serif'], // Custom font
+            },
+
+            colors: {
+                dmaroon: '#521018',
+                maroon: '#A41C30',
+                white2: '#FFFEFC',
+                itom: '#28282B'
+            },
+        },
     },
     plugins: [
         /**

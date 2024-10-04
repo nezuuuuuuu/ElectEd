@@ -1333,6 +1333,11 @@ select {
   padding-bottom: 1.25rem;
 }
 
+.py-24 {
+  padding-top: 6rem;
+  padding-bottom: 6rem;
+}
+
 .pb-24 {
   padding-bottom: 6rem;
 }
@@ -1581,6 +1586,11 @@ select {
   font-weight: normal;
 
   font-style: normal;
+}
+
+.border-maroon {
+  --tw-border-opacity: 1;
+  border-color: rgb(164 28 48 / var(--tw-border-opacity)) /* #a41c30 */;
 }
 
 .hover\:border-maroon:hover {
