@@ -12,4 +12,4 @@ def guidelines(request):
 
 def logout(request):
     #IMPLEMENT LOGOUT SA USER DIRI
-    return
+    return 
