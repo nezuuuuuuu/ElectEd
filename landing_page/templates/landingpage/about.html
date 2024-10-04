@@ -3,10 +3,17 @@
 {% block title %}About Us {% endblock %}
 
 {% block content %}
-<section class='bg-white2'>
-    <!-- {/* ABOUT US TEXT */} -->
-    <div class='container flex flex-col items-center justify-center h-full gap-6 mx-auto my-24 text-center'>
-        <h1 class='text-6xl font-bold text-maroon '>About Us</h1>
+<section class='flex flex-col justify-center py-12 xl:py-0'>
+    <div class="absolute inset-0 w-full h-full -z-10">
+        <img 
+            src="{% static 'landingpics/teamfogi.png' %}" 
+            alt="Contact Us Background" 
+            class="object-cover w-full mt-6"
+        />
+    </div>
+      <!-- {/* ABOUT US TEXT */} -->
+    <div class='flex flex-col items-center justify-center gap-8 mx-auto mt-8 pt-24 pb-24 text-center'>
+        <h1 class='text-6xl font-bold text-maroon pt-2'>About Us</h1>
         <p class='text-3xl font-semibold'>
             <span class='text-maroon'>ElectEd</span> is an <span class='text-maroon'>Advanced Online Voting Platform </span> 
             built for educational institutions. Our mission is to empower students with a secure, transparent, and easy-to-use system 
