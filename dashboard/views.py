@@ -6,3 +6,10 @@ def main(request):
 
 def votes(request):
     return render(request, 'dashboard_templates/dashboard_votes.html')
+
+def guidelines(request):
+    return render(request, 'dashboard_templates/dashboard_guidelines.html')
+
+def logout(request):
+    #IMPLEMENT LOGOUT SA USER DIRI
+    return

@@ -1083,6 +1083,14 @@ select {
   width: 1rem;
 }
 
+.w-6 {
+  width: 1.5rem /* 24px */;
+}
+
+.w-8 {
+  width: 2rem /* 32px */;
+}
+
 .w-10 {
   width: 2.5rem;
 }

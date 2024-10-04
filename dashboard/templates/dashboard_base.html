@@ -14,7 +14,7 @@
             <!-- {/* LEFT */} -->
             <div class='flex items-center gap-6'>
                 <button onClick={!is_expanded} class="p-2">
-                    <img src="{% static 'icons/menufries.svg' %}" alt="">
+                    <img src="{% static 'icons/menufries.svg' %}" class="w-8 h-auto" alt="">
                 </button>
                 
                 <a href="/dashboard">
@@ -40,7 +40,7 @@
     
             <!-- {/* RIGHT */} -->
             <div class='flex items-center justify-start gap-4 pr-8'>
-                <div class='justify-center overflow-hidden border-4 rounded-full w-12 h-12 border-maroon'>
+                <div class='justify-center w-12 h-12 overflow-hidden border-4 rounded-full border-maroon'>
                     <img src="{% static 'landingpics/nico.png' %}" class="w-12 h-auto"/>
                 </div>
                 <h2 class='hidden text-xl font-medium md:block'>Wang Pok</h2>
@@ -83,27 +83,13 @@
                         "
                     >
                         <div class="py-3 pl-5 text-2xl">
-                            <img src="" alt="">
+                            <img src="{% static 'icons/vote_icon.svg' %}" alt="">
                         </div>
                         <span class="ml-3">Vote</span>
                     </a>
 
-                    <!-- Settings Link -->
-                    <a href=""
-                        class="
-                            {% if request.path == '/dashboard/settings/' %} bg-gradient-to-r from-dmaroon to-maroon text-white2 {% endif %}
-                            text-maroon flex items-center hover:bg-gradient-to-r from-dmaroon to-maroon hover:text-white2 
-                            gap-x-4 p-2
-                        "
-                    >
-                        <div class="py-3 pl-5 text-2xl">
-                            <i class="fa fa-cogs"></i>
-                        </div>
-                        <span class="ml-3">Settings</span>
-                    </a>
-
                     <!-- Guidelines Link -->
-                    <a href=""
+                    <a href="{% url 'guidelines' %}"
                         class="
                             {% if request.path == '/dashboard/guidelines/' %} bg-gradient-to-r from-dmaroon to-maroon text-white2 {% endif %}
                             text-maroon flex items-center hover:bg-gradient-to-r from-dmaroon to-maroon hover:text-white2 
@@ -111,20 +97,17 @@
                         "
                     >
                         <div class="py-3 pl-5 text-2xl">
-                            <i class="fa fa-tasks"></i>
+                            <img src="{% static 'icons/guidelines_icon.svg' %}" alt="">
                         </div>
                         <span class="ml-3">Guidelines</span>
                     </a>
 
                     <!-- Logout Link -->
                     <a href=""
-                        class="
-                            text-maroon flex items-center hover:bg-gradient-to-r from-dmaroon to-maroon hover:text-white2 
-                            gap-x-4 p-2 absolute bottom-0 w-full text-center hover:rounded-br-xl
-                        "
+                        class="absolute bottom-0 flex items-center w-full p-2 text-center text-maroon hover:bg-gradient-to-r from-dmaroon to-maroon hover:text-white2 gap-x-4 hover:rounded-br-xl"
                     >
                         <div class="py-3 pl-5 text-2xl">
-                            <i class="fa fa-sign-out"></i>
+                            <img src="{% static 'icons/logout_icon.svg' %}" alt="">
                         </div>
                         <span class="ml-3">Logout</span>
                     </a>
