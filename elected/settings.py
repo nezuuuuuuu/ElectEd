@@ -63,7 +63,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
+    'django_auth_adfs.middleware.LoginRequiredMiddleware',
     #addded
     'django_browser_reload.middleware.BrowserReloadMiddleware',
 ]
@@ -179,6 +179,7 @@ AUTH_ADFS = {
     'USERNAME_CLAIM': 'upn',
     'TENANT_ID': tenant_id,
     'RELYING_PARTY_ID': client_id,
+     "LOGIN_EXEMPT_URLS": [ '^$',],
 }
 
 
