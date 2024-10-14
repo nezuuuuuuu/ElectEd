@@ -39,9 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'django_auth_adfs',  #authentication
-
-    'landing_page',
-    
+    'dashboard',
+    'landing_page',    
     'tailwind',
     'theme',
     'django_browser_reload',
@@ -179,7 +178,7 @@ AUTH_ADFS = {
     'USERNAME_CLAIM': 'upn',
     'TENANT_ID': tenant_id,
     'RELYING_PARTY_ID': client_id,
-     "LOGIN_EXEMPT_URLS": [ '^$',],
+     "LOGIN_EXEMPT_URLS": [ '^$','about/','contact/','faqs/'],
      "REDIR_URI": "http://localhost:8000/oauth2/callback",
 }
 

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static tailwind_tags %}
+    {% tailwind_css %}
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <nav class='fixed top-0 left-0 z-50 flex items-center justify-between w-full px-6 py-2 bg-transparent shadow-md bg-white2 text-maroon'>
+            <!-- {/* LEFT */} -->
+            <div class='flex items-center gap-6'>
+                <button onClick={!is_expanded} class="p-2">
+                    <img src="{% static 'icons/menufries.svg' %}" class="w-8 h-auto" alt="">
+                </button>
+                
+                <a href="/dashboard">
+                    <img src="{% static 'landingpics/logoonly.svg' %}"
+                        class="w-12 h-auto"
+                    />
+                </a>
+            </div>
+    
+            
+            <!-- {/* MID */} -->
+            <div class='flex items-center px-4 py-1 border bg-maroon/5 rounded-full border-maroon/30 min-w-[50%]'>
+                <a href="/dashboard">
+                    <img src="{% static 'icons/search_icon.svg' %}" alt="">
+                </a>
+                <input 
+                    type="text" 
+                    placeholder='Search' 
+                    class='w-full h-full py-1 pr-4 text-lg bg-transparent border-none outline-none text-itom' 
+                />
+            </div>
+    
+    
+            <!-- {/* RIGHT */} -->
+            <div class='flex items-center justify-start gap-4 pr-8'>
+                <div class='justify-center w-12 h-12 overflow-hidden border-4 rounded-full border-maroon'>
+                    <img src="{% static 'landingpics/nico.png' %}" class="w-12 h-auto"/>
+                </div>
+                <h2 class='hidden text-xl font-medium md:block'>{{username}}</h2>
+            </div>
+        </nav> 
+  
+        <!-- {/* Sidebar component */} -->    
+        <aside 
+            class="
+                lg:scale-100
+                fixed top-16 left-0 h-[80%] bg-red-100 
+                rounded-br-xl shadow-md 
+                w-52
+                duration-300
+            "
+        >
+            <!-- Sidebar Container -->
+            <div class="flex-col h-full justify-evenly">
+                <ul class="flex flex-col justify-center pt-12">
+                    <!-- Dashboard Link -->
+                    <a href="{% url 'main' %}"
+                        class="
+                            {% if request.path == '/dashboard/' %} bg-gradient-to-r from-dmaroon to-maroon text-white2 {% endif %}
+                            text-maroon flex items-center hover:bg-gradient-to-r from-dmaroon to-maroon hover:text-white2 
+                            gap-x-4 p-2
+                        "
+                    >
+                        <div class="py-3 pl-5 text-2xl">
+                             <img src="{% static 'icons/home.svg' %}" alt="">
+                        </div>
+                        <span class="ml-3">Dashboard</span>
+                    </a>
+
+                    <!-- Vote Link -->
+                    <a href="{% url 'votes' %}"
+                        class="
+                            {% if request.path == '/dashboard/votes/' %} bg-gradient-to-r from-dmaroon to-maroon text-white2 {% endif %}
+                            text-maroon flex items-center hover:bg-gradient-to-r from-dmaroon to-maroon hover:text-white2 
+                            gap-x-4 p-2
+                        "
+                    >
+                        <div class="py-3 pl-5 text-2xl">
+                            <img src="{% static 'icons/vote_icon.svg' %}" alt="">
+                        </div>
+                        <span class="ml-3">Vote</span>
+                    </a>
+
+                    <!-- Guidelines Link -->
+                    <a href="{% url 'guidelines' %}"
+                        class="
+                            {% if request.path == '/dashboard/guidelines/' %} bg-gradient-to-r from-dmaroon to-maroon text-white2 {% endif %}
+                            text-maroon flex items-center hover:bg-gradient-to-r from-dmaroon to-maroon hover:text-white2 
+                            gap-x-4 p-2
+                        "
+                    >
+                        <div class="py-3 pl-5 text-2xl">
+                            <img src="{% static 'icons/guidelines_icon.svg' %}" alt="">
+                        </div>
+                        <span class="ml-3">Guidelines</span>
+                    </a>
+
+                    <!-- Logout Link -->
+                    <a href=""
+                        class="absolute bottom-0 flex items-center w-full p-2 text-center text-maroon hover:bg-gradient-to-r from-dmaroon to-maroon hover:text-white2 gap-x-4 hover:rounded-br-xl"
+                    >
+                        <div class="py-3 pl-5 text-2xl">
+                            <img src="{% static 'icons/logout_icon.svg' %}" alt="">
+                        </div>
+                        <span class="ml-3">Logout</span>
+                    </a>
+                </ul>
+            </div>
+        </aside>
+
+      </header>
+    
+
+    <main class="container mt-28 lg:absolute md:left-28 lg:left-48 xl:left-72">
+        {% block body %}
+
+        {% endblock %}
+    </main>
+</body>
+</html>

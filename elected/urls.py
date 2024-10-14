@@ -22,4 +22,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include("landing_page.urls")),
     path('oauth2/', include('django_auth_adfs.urls')),
+
+
+    path('dashboard/', include("dashboard.urls")),
+
+
 ]   
