@@ -5,8 +5,9 @@
 
 {% block body %}
 <section class='mt-10 flex flex-col justify-center py-12 xl:py-0 mx-auto max-w-5xl'>
-    <h1 class='pl-6 text-5xl font-bold text-maroon mb-4 pt-2 px-28'>CAST YOUR VOTES NOW for {{ election.title }}!</h1>  <!-- Display selected election title -->
-
+    <h1 class='pl-6 text-4xl font-bold text-maroon mb-4 pt-2 px-28'>
+        CAST YOUR VOTES NOW for <span class="text-dmaroon">{{ election.title }}</span>!
+    </h1>
     {% for position in positions %}
     <div class='flex flex-col items-center justify-center gap-3 pt-10 text-center'>
         <h1 class='pl-6 text-2xl font-bold text-dark-maroon mb-4 pt-2 px-28'>{{ position.title }}</h1>
@@ -32,8 +33,8 @@
                                 </button>
                             </a>
                             <a href="">
-                                <button class="px-4 py-2 mb-2 font-medium rounded-full border-2 border-maroon w-32 text-maroon whitespace-nowrap">
-                                    View_Details
+                                <button class="px-4 py-2 mb-2 font-medium rounded-full border-2 border-maroon w-32 text-maroon">
+                                    View&nbspDetails
                                 </button>
                             </a>
                         </div>

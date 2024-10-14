@@ -1480,6 +1480,11 @@ select {
   padding-right: 2rem;
 }
 
+.py-0 {
+  padding-top: 0rem;
+  padding-bottom: 0rem;
+}
+
 .py-1 {
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
@@ -1564,6 +1569,9 @@ select {
 .pt-42 {
   padding-top: 16rem;
 }
+.text-left {
+  text-align: left;
+}
 
 .text-center {
   text-align: center;
@@ -1645,14 +1653,19 @@ select {
   color: rgb(40 40 43 / var(--tw-text-opacity));
 }
 
+.text-grey {
+  --tw-text-opacity: 0.7;
+  color: rgb(40 40 43 / var(--tw-text-opacity));
+}
+
 .text-maroon {
   --tw-text-opacity: 1;
   color: rgb(164 28 48 / var(--tw-text-opacity));
 }
 
-.text-dark-maroon {
+.text-dmaroon {
   --tw-text-opacity: 100;
-    color: rgb(164 28 48 / 0.3 var(--tw-text-opacity));
+    color: #521018;
 }
 
 .text-white {
