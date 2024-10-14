@@ -12,3 +12,5 @@ def contact(request):
 
 def faqs(request):
     return render(request, 'landingpage/faqs.html')
+
+

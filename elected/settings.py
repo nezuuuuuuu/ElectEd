@@ -38,9 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'landing_page',
+    'django_auth_adfs',  #authentication
     'dashboard',
-    
+    'landing_page',    
     'tailwind',
     'theme',
     'django_browser_reload',
@@ -62,7 +62,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
+    'django_auth_adfs.middleware.LoginRequiredMiddleware',
     #addded
     'django_browser_reload.middleware.BrowserReloadMiddleware',
 ]
@@ -143,6 +143,47 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+# Azure
+
+AUTHENTICATION_BACKENDS = (
+   
+    'django_auth_adfs.backend.AdfsAuthCodeBackend',
+   
+)
+
+import os
+from dotenv import load_dotenv
+
+LOGIN_URL = "django_auth_adfs:login"
+LOGIN_REDIRECT_URL = "/admin"
+
+load_dotenv()
+client_id = os.getenv('client_id')
+client_secret = os.getenv('client_secret')
+tenant_id = os.getenv('tenant_id')
+
+
+AUTH_ADFS = {
+    'AUDIENCE': client_id,
+    'CLIENT_ID': client_id,
+    'CLIENT_SECRET': client_secret,
+    'CLAIM_MAPPING': {'first_name': 'given_name',
+                      'last_name': 'family_name',
+                      'email': 'upn'},
+    'GROUPS_CLAIM': 'roles',
+    'MIRROR_GROUPS': True,
+    'USERNAME_CLAIM': 'upn',
+    'TENANT_ID': tenant_id,
+    'RELYING_PARTY_ID': client_id,
+     "LOGIN_EXEMPT_URLS": [ '^$','about/','contact/','faqs/'],
+     "REDIR_URI": "http://localhost:8000/oauth2/callback",
+}
+
+
+
 
 import os
 

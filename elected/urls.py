@@ -26,6 +26,10 @@ urlpatterns = [
 
     # DASHBOARD
     path('dashboard/', include("dashboard.urls")),
+    path('oauth2/', include('django_auth_adfs.urls')),
+
+
+
 ]   
 
 if settings.DEBUG:
