@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 {% load static %}
 <html lang="en">
 <head>
@@ -32,7 +32,7 @@
             <div class="items-center hidden gap-10 xl:flex">
                 {% include 'landingpage/components/navigations.html' %} 
 
-                <a href="https://login.microsoftonline.com/common/oauth2/v2.0/authorize?scope=service%3A%3Aaccount.microsoft.com%3A%3AMBI_SSL%20openid%20profile%20offline_access&response_type=code&client_id=81feaced-5ddd-41e7-8bef-3e20a2689bb7&redirect_uri=https%3A%2F%2Faccount.microsoft.com%2Fauth%2Fcomplete-signin-oauth&client-request-id=c2988287-7e66-4a22-9f91-31dab97a2ca1&x-client-SKU=MSAL.Desktop&x-client-Ver=4.61.3.0&x-client-OS=Windows%20Server%202019%20Datacenter&prompt=login&client_info=1&state=H4sIAAAAAAAEAAXByYKCIAAA0H-Za4cBJZNjaeaSOKi5cKNxD7NJherr570vawmtdL-xdW3npom7ls6ZEHc7VN_ziA51IgJVP3lzz3Iikl9zu_zd9Bg8i7FIAXw3JP7giZV431CPwG3Xpa86WH3pjdpGC3gC8X0GsGWhmdLNw9CjDMYH292dNt9LNP-GJxq49vjqlrcTjECf2fbQsIFHkH0eRPgXIUPQ-kuG1vST0d7PS87Ih7ZntQYa-TGx4teFu6hzYUbB0ZE5cnhdGkPb9gfpmam-b5XTWGtWYAltNWP2osBqr0id1-lYy-ZmGr2Ky-KGhB9NcX4PWSVylQ3izgU9zpMD9BKN4Bhha3V62glrhQSY-VsX9Supq9mII_fJAw0NWe0hiYvRsI2qa7x3vGtPvQiAkrE2FfKS40tYOYLBH9A_uNBv-eXrHynp6UWCAQAA&msaoauth2=true&lc=1033&ru=https%3A%2F%2Faccount.microsoft.com%2Faccount%2Fmanage-my-account">
+                <a href="{% url 'main' %}">
                     <button class='px-10 py-1 mx-12 font-medium bg-transparent border-2 rounded-full border-white2 hover:bg-white2 hover:border-maroon hover:text-maroon'>
                             Login
                     </button>
