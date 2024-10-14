@@ -1,8 +1,33 @@
-{% extends 'dashboard_base.html' %}
-{% load static %}
+    {% extends 'dashboard_base.html' %}
+    {% load static %}
 
-{% block title %}Dashboard-Votes{% endblock %}
+    {% block title %}Dashboard-Votes{% endblock %}
 
-{% block body %}
-    <h1>DASHBOARD Votes</h1>
-{% endblock %}
+    {% block body %}
+    <section class='mt-10 flex flex-col justify-center py-12 xl:py-0 mx-auto max-w-5xl'>
+        <h1 class='pl-6 text-2xl font-bold text-maroon mb-4 pt-2 px-28'>Active Elections</h1>
+        <div class='flex flex-col items-center justify-center gap-3 pt-10 text-center'>
+            <!-- CARDS -->
+            <div class='container grid w-3 grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 mb-28 px-28 xl:grid-cols-3'>
+                {% for election in elections %}
+                <a href="{% url 'votes_candidates' election.id %}">
+                    <div class="flex flex-col items-center justify-center text-center border-4 border-maroon rounded-xl text-maroon overflow-hidden w-60 h-full">
+                        <!-- CONTAINER -->
+                        {% if election.image %}
+                        <div class="h-40 w-full relative overflow-hidden">
+                            <img src="{{ election.image.url }}" class="absolute inset-0 w-full h-full object-cover" alt="{{ election.title }}">
+                        </div>
+                        {% else %}
+                        <div class="h-40 w-full relative overflow-hidden">
+                            <img src="{% static 'landingpics/teamfogi.png' %}" class="absolute inset-0 w-full h-full object-cover" alt="No image available">
+                        </div>
+                        {% endif %}
+                        <h1 class='py-5 text-center text-2xl font-bold bg-white'>{{ election.title }}</h1>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    {% endblock %}

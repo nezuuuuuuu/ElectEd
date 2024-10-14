@@ -1,0 +1,47 @@
+{% extends 'dashboard_base.html' %}
+{% load static %}
+
+{% block title %}Dashboard-Votes-Candidates{% endblock %}
+
+{% block body %}
+<section class='mt-10 flex flex-col justify-center py-12 xl:py-0 mx-auto max-w-5xl'>
+    <h1 class='pl-6 text-5xl font-bold text-maroon mb-4 pt-2 px-28'>CAST YOUR VOTES NOW for {{ election.title }}!</h1>  <!-- Display selected election title -->
+
+    {% for position in positions %}
+    <div class='flex flex-col items-center justify-center gap-3 pt-10 text-center'>
+        <h1 class='pl-6 text-2xl font-bold text-dark-maroon mb-4 pt-2 px-28'>{{ position.title }}</h1>
+        <div class='container grid w-3 grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 mb-28 px-28 xl:grid-cols-3'>
+            {% for candidate in candidates %}
+                {% if candidate.position == position and candidate.election == election %}  <!-- Check election -->
+                    <div class="flex flex-col items-center justify-center px-10 py-5 text-center border-4 border-maroon rounded-xl text-maroon overflow-hidden w-60 h-full">
+                        <div class="w-40 h-40 mb-2 overflow-hidden border-4 rounded-full border-maroon py10">
+                            {% if candidate.image %}
+                                <img src="{{ candidate.image.url }}" class="h-full object-cover rounded-full" alt="{{ candidate.name }}">
+                            {% else %}
+                                <img src="{% static 'landingpics/default.png' %}" class="h-full object-cover rounded-full" alt="No Image">
+                            {% endif %}
+                        </div>
+                        <div class="container py-5">
+                            <h1 class='text-center text-2xl font-bold bg-white'>{{ candidate.name }}</h1>
+                            <h3 class='text-center font-medium bg-white'>{{ candidate.year }}</h3>
+                        </div>
+                        <div class="container flex flex-row justify-center gap-2">
+                            <a href="">
+                                <button class="px-12 py-2 mb-2 font-medium rounded-full bg-maroon text-white2 w-fit">
+                                    Vote
+                                </button>
+                            </a>
+                            <a href="">
+                                <button class="px-4 py-2 mb-2 font-medium rounded-full border-2 border-maroon w-32 text-maroon whitespace-nowrap">
+                                    View_Details
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}    
+</section>
+{% endblock %}

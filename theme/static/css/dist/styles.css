@@ -819,7 +819,7 @@ select {
   }
 
   .xl\:left-72 {
-    left: 18rem /* 288px */;
+    left: 14rem /* 288px */;
   }
 }
 
@@ -911,6 +911,11 @@ select {
 .mx-20 {
   margin-left: 5rem;
   margin-right: 5rem;
+}
+
+.mx-40 {
+  margin-left: 10rem;
+  margin-right: 10rem;
 }
 
 .mx-auto {
@@ -1011,13 +1016,23 @@ select {
   margin-top: 5rem;
 }
 
-.mt-28 {
+.mt-10 {
   margin-top: 7rem /* 112px */;
+}
+
+.mt-12 {
+  margin-top: 10rem /* 112px */;
 }
 
 .pl-5 {
   padding-left: 1.25rem /* 20px */;
 }
+
+.pl-6 {
+  padding-left: 3rem /* 20px */;
+}
+
+
 
 .block {
   display: block;
@@ -1061,6 +1076,10 @@ select {
 
 .h-40 {
   height: 10rem;
+}
+
+.h-60 {
+  height: 16rem;
 }
 
 .h-8 {
@@ -1117,6 +1136,10 @@ select {
 
 .w-52 {
   width: 13rem /* 208px */;
+}
+
+.w-60 {
+  width: 20rem /* 208px */;
 }
 
 .w-8 {
@@ -1242,6 +1265,16 @@ select {
 
 .overflow-hidden {
   overflow: hidden;
+}
+
+.rounded-t-xl {
+  border-top-left-radius: 0.75rem; /* Adjust the size as needed */
+  border-top-right-radius: 0.75rem; /* Adjust the size as needed */
+}
+
+.rounded-b-xl {
+  border-bottom-left-radius: 0.75rem; /* Adjust the size as needed */
+  border-bottom-right-radius: 0.75rem; /* Adjust the size as needed */
 }
 
 .rounded-full {
@@ -1615,6 +1648,11 @@ select {
 .text-maroon {
   --tw-text-opacity: 1;
   color: rgb(164 28 48 / var(--tw-text-opacity));
+}
+
+.text-dark-maroon {
+  --tw-text-opacity: 100;
+    color: rgb(164 28 48 / 0.3 var(--tw-text-opacity));
 }
 
 .text-white {
