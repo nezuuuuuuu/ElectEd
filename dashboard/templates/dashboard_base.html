@@ -11,10 +11,11 @@
 <body>
     <header>
         <nav class='fixed top-0 left-0 z-10 flex items-center justify-between w-full px-6 py-2 shadow-md bg-white2 text-maroon'>
+
             <!-- {/* LEFT */} -->
             <div class='flex items-center gap-6'>
-                <button onClick={!is_expanded} class="p-2">
-                    <img src="{% static 'icons/menufries.svg' %}" class="w-8 h-auto" alt="">
+                <button id="toggleSidebarButton" class="p-3 rounded-full hover:bg-itom/35">
+                    <img src="{% static 'icons/menufries.svg' %}" class="h-auto w-7" alt="">
                 </button>
                 
                 <a href="/dashboard">
@@ -26,16 +27,9 @@
     
             
             <!-- {/* MID */} -->
-            <div class='flex items-center px-4 py-1 border bg-maroon/5 rounded-full border-maroon/30 min-w-[50%]'>
-                <a href="/dashboard">
-                    <img src="{% static 'icons/search_icon.svg' %}" alt="">
-                </a>
-                <input 
-                    type="text" 
-                    placeholder='Search' 
-                    class='w-full h-full py-1 pr-4 text-lg bg-transparent border-none outline-none text-itom' 
-                />
-            </div>
+            {% block content %}
+            
+            {% endblock %}
     
     
             <!-- {/* RIGHT */} -->
@@ -48,12 +42,12 @@
         </nav> 
   
         <!-- {/* Sidebar component */} -->    
-        <aside 
+        <aside id="sidebar"
             class="
+                w-52
                 lg:scale-100
                 fixed top-16 left-0 h-[80%] bg-red-100 
                 rounded-br-xl shadow-md 
-                w-52
                 duration-300
             "
         >
@@ -71,7 +65,7 @@
                         <div class="py-3 pl-5 text-2xl">
                              <img src="{% static 'icons/home.svg' %}" alt="">
                         </div>
-                        <span class="ml-3">Dashboard</span>
+                        <span class="ml-3 spans">Dashboard</span>
                     </a>
 
                     <!-- Vote Link -->
@@ -85,7 +79,7 @@
                         <div class="py-3 pl-5 text-2xl">
                             <img src="{% static 'icons/vote_icon.svg' %}" alt="">
                         </div>
-                        <span class="ml-3">Vote</span>
+                        <span class="ml-3 spans">Vote</span>
                     </a>
 
                     <!-- Guidelines Link -->
@@ -99,7 +93,7 @@
                         <div class="py-3 pl-5 text-2xl">
                             <img src="{% static 'icons/guidelines_icon.svg' %}" alt="">
                         </div>
-                        <span class="ml-3">Guidelines</span>
+                        <span class="ml-3 spans">Guidelines</span>
                     </a>
 
                     <!-- Logout Link -->
@@ -109,19 +103,48 @@
                         <div class="py-3 pl-5 text-2xl">
                             <img src="{% static 'icons/logout_icon.svg' %}" alt="">
                         </div>
-                        <span class="ml-3">Logout</span>
+                        <span class="ml-3 spans">Logout</span>
                     </a>
                 </ul>
             </div>
         </aside>
 
-      </header>
+    </header>
     
-
-    <main class="lg:absolute md:left-28 lg:left-48 xl:left-72 max-w-screen-lg">
+    <main class="mt-28 lg:absolute md:left-28 lg:left-48 xl:left-72">
         {% block body %}
 
         {% endblock %}
     </main>
+
+    <script>
+        let isSidebarExpanded = true;
+
+        const toggleSidebarButton = document.getElementById('toggleSidebarButton');
+        const sidebar = document.getElementById('sidebar');
+        const spanElements = document.querySelectorAll('.spans');
+
+        toggleSidebarButton.addEventListener('click', () => {
+            isSidebarExpanded = !isSidebarExpanded;
+
+            if(isSidebarExpanded) {
+                sidebar.classList.add('w-52');
+                sidebar.classList.remove('w-20');
+
+                // remov hidden if expanded sha
+                spanElements.forEach(span => {
+                    span.classList.remove('hidden');
+                });
+            } else {
+                sidebar.classList.add('w-20');
+                sidebar.classList.remove('w-52');
+
+                // hide if not expanded
+                spanElements.forEach(span => {
+                    span.classList.add('hidden');
+                });
+            }
+        })
+    </script>
 </body>
 </html>
