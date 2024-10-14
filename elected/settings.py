@@ -159,7 +159,7 @@ import os
 from dotenv import load_dotenv
 
 LOGIN_URL = "django_auth_adfs:login"
-LOGIN_REDIRECT_URL = "/"
+LOGIN_REDIRECT_URL = "/admin"
 
 load_dotenv()
 client_id = os.getenv('client_id')
@@ -180,6 +180,7 @@ AUTH_ADFS = {
     'TENANT_ID': tenant_id,
     'RELYING_PARTY_ID': client_id,
      "LOGIN_EXEMPT_URLS": [ '^$',],
+     "REDIR_URI": "http://localhost:8000/oauth2/callback",
 }
 
 
