@@ -10,7 +10,7 @@
 </head>
 <body>
     <header>
-        <nav class='fixed top-0 left-0 z-50 flex items-center justify-between w-full px-6 py-2 bg-transparent shadow-md bg-white2 text-maroon'>
+        <nav class='fixed top-0 left-0 z-10 flex items-center justify-between w-full px-6 py-2 shadow-md bg-white2 text-maroon'>
             <!-- {/* LEFT */} -->
             <div class='flex items-center gap-6'>
                 <button onClick={!is_expanded} class="p-2">
@@ -118,7 +118,7 @@
       </header>
     
 
-    <main class="container mt-28 lg:absolute md:left-28 lg:left-48 xl:left-72">
+    <main class="lg:absolute md:left-28 lg:left-48 xl:left-72 max-w-screen-lg">
         {% block body %}
 
         {% endblock %}
