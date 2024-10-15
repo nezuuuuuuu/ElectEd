@@ -56,7 +56,7 @@ module.exports = {
 
         extend: {
             fontFamily: {
-                samsung: ['"Samsung Sharp Sans"', 'sans-serif'], // Custom font
+                samsung: ['"Samsung Sharp Sans"', 'sans-serif'], // kustom font
             },
 
             colors: {
