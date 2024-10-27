@@ -1,5 +1,7 @@
 from django.db import models
 from django.core.exceptions import ValidationError
+from multiselectfield import MultiSelectField
+
 
 # Create your models here.
 
@@ -31,11 +33,10 @@ class Election(models.Model):
     title = models.CharField(max_length=255)
     image = models.ImageField(upload_to='elections/', null=True, blank=True)
     description = models.TextField(blank=True)
-    department = models.CharField(max_length=20, choices=DEPARTMENT_CHOICES, default="ALL")
+    departments = MultiSelectField(choices=DEPARTMENT_CHOICES, default=['ALL'])  
 
     def __str__(self):
-        return self.title
-    
+        return f"{self.title} - Departments: {', '.join(self.departments)}"   
 #Position Per election
 class Position(models.Model):
     title = models.CharField(max_length=255)
@@ -58,6 +59,7 @@ class Candidate(models.Model):
     image = models.ImageField(upload_to='candidates/', blank=True, null=True)
     election = models.ForeignKey(Election, on_delete=models.CASCADE, related_name='candidates')
     position = models.ForeignKey(Position, on_delete=models.CASCADE, related_name='candidates')
+    vote_count = models.IntegerField(default=0)  # New field to track vote count
 
     def __str__(self):
         return self.name
@@ -85,13 +87,18 @@ class Student(models.Model):
     ("Music", "Music"),
     ("Law", "Law"),
     ]
- 
 
     student_id = models.CharField(max_length=10, unique=True)  # Unique student ID
     name = models.CharField(max_length=100)                     # Student name
     department = models.CharField(max_length=20, choices=DEPARTMENT_CHOICES, default="NULL")
 
-
-   
     def __str__(self):
         return f"{self.name} ({self.department})"  # Display name and department
+    
+class VoteSlip(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='voteslip')                    # Student name
+    election = models.ForeignKey(Election, on_delete=models.CASCADE, related_name='voteslip')
+    votes = models.CharField(max_length=20, default="NULL")
+
+    def __str__(self):
+        return f'{self.student} ({self.election})'

@@ -1,15 +1,19 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Election, Candidate, Position
+from .models import Election, Candidate, Position,Student
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
 
+Logged_id=None
 
 @login_required
 def get_user_info(request):
+    global Logged_id
     user = request.user
-    id = user.get_short_name().split(' ')[0]; 
+    id = {(user.get_short_name()).split(' ')[0]}
+    Logged_id = str(id).replace('-', '').replace('{', '').replace('}', '').replace("'", '').replace('"', '').strip()
+
     user_info = {
         'username': user.username,
         'email': user.email,
@@ -18,19 +22,24 @@ def get_user_info(request):
         
     }
     return user_info
-# Create your views here.
+
 def main(request):
-      user_info=get_user_info(request)
-      admins(request)
-      if request.user.is_authenticated and request.user.is_staff:
-        return redirect('/admin/')       
-            
-      return render(request, 'dashboard_templates/dashboard_main.html',get_user_info(request))
+    user_info=get_user_info(request)
+    global Logged_id
+
+    admins(request)
+    return render(request, 'dashboard_templates/dashboard_main.html', {
+        **get_user_info(request)  # Assuming this returns a dictionary
+    })
 
 def votes(request):
-    elections = Election.objects.all()
-    return render(request, 'dashboard_templates/dashboard_votes.html', {'elections': elections} |  get_user_info(request))
+    user_info=get_user_info(request)
+    global Logged_id
 
+    student = get_object_or_404(Student, student_id=Logged_id)  # Ensure you handle cases where the student does not exist
+    election = Election.objects.filter(departments__contains=student.department)
+ 
+    return render(request, 'dashboard_templates/dashboard_votes.html', {'elections': election} |  get_user_info(request))
 
 def votes_candidates(request, election_id):  # Accept election_id as a parameter
     election = get_object_or_404(Election, id=election_id)  
