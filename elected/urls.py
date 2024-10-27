@@ -18,14 +18,18 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
+from .admin import admin_site
+
 
 urlpatterns = [
     path("__reload__/", include("django_browser_reload.urls")),
-    path('admin/', admin.site.urls),
+    path('admin/', admin_site.urls),
     path('', include("landing_page.urls")),
 
     # DASHBOARD
     path('dashboard/', include("dashboard.urls")),
+    path('dashboard/', include("dashboard.urls")),
+
     path('oauth2/', include('django_auth_adfs.urls')),
 
 

@@ -1,7 +1,9 @@
 from django.contrib import admin
 from .forms import CandidateAdminForm
-from .models import Election, Position, Candidate
-
+from .models import Election, Position, Candidate, Student
+from django.contrib import admin
+from django.contrib.admin.sites import AdminSite
+from elected.admin import admin_site
 
 class PositionInline(admin.TabularInline):
     model = Position
@@ -15,6 +17,7 @@ class ElectionAdmin(admin.ModelAdmin):
 
     # Optional: Customize list display for Election admin
     list_display = ('title', 'description')  # Display title and description in the election list
+    
 
 class PositionAdmin(admin.ModelAdmin):
     list_display = ('title', 'get_election_title')  # Display position title and election title
@@ -50,7 +53,18 @@ class CandidateAdmin(admin.ModelAdmin):
     class Media:
         js = ('admin/js/admin_candidate.js',)
 
+class StudentAdmin(admin.ModelAdmin):
+    list_display = ('student_id', 'name', 'department')  # Display these fields in the list view
+    search_fields = ('name', 'student_id', 'department')  # Allow searching by these fields
+
+    # Optional: Customize the form layout or fields if needed
+    # form = StudentAdminForm  # Uncomment if you have a custom form for the Student model
+
+# Register the Student model with the custom admin class
+admin_site.register(Student, StudentAdmin)
+
 # Register your models here
-admin.site.register(Election, ElectionAdmin)
-admin.site.register(Position, PositionAdmin) 
-admin.site.register(Candidate, CandidateAdmin)
+admin_site.register(Election, ElectionAdmin)
+admin_site.register(Position, PositionAdmin) 
+admin_site.register(Candidate, CandidateAdmin)
+
