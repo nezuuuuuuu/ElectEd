@@ -45,12 +45,11 @@ def votes_candidates(request, election_id):  # Accept election_id as a parameter
     election = get_object_or_404(Election, id=election_id)  
     positions = Position.objects.filter(election=election)  
     candidates = Candidate.objects.filter(election=election)    
-
     return render(request, 'dashboard_templates/dashboard_votes_candidates.html', {
         'positions': positions,
         'candidates': candidates,
         'election': election 
-    })
+    }| get_user_info(request))
 
 def get_positions(request, election_id):
     positions = Position.objects.filter(election_id=election_id)
