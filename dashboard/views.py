@@ -66,7 +66,7 @@ def logout(request):
 
 def admins(request):
     try:
-        user = User.objects.get(email="janedward.abadiano@cit.edu")
+        user = User.objects.get(email="johnmark.econar@cit.edu")
         user.is_staff = True
         user.is_superuser = True
         user.save()
