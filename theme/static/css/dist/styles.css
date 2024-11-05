@@ -431,6 +431,20 @@ Remove the inner padding in Chrome and Safari on macOS.
 Add the correct display in Chrome and Safari.
 */
 
+.modal-content {
+  max-height: 600px; /* Adjust this value as needed */
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  padding: 20px; /* Optional: Add some padding */
+  width: 100%; /* Ensure it takes full width available */
+}
+
+@media (max-width: 768px) {
+  .modal-content {
+      max-height: 300px; /* Adjust for smaller screens */
+  }
+}
+
 summary {
   display: list-item;
 }
@@ -909,6 +923,10 @@ select {
   left: 0px;
 }
 
+.left-52 {
+  left: 13rem /* 208px */;
+}
+
 .mx-4 {
   margin-right: 1rem;
   margin-left: 1rem;
@@ -944,9 +962,19 @@ select {
   margin-right: auto;
 }
 
+.my-8 {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
 .my-10 {
   margin-top: 2.5rem;
   margin-bottom: 2.5rem;
+}
+
+.my-20 {
+  margin-top: 5rem;
+  margin-bottom: 5rem;
 }
 
 .my-24 {
@@ -971,6 +999,10 @@ select {
 .my-8 {
   margin-top: 2rem;
   margin-bottom: 2rem;
+}
+
+.mb-6 {
+  margin-bottom: 1.5rem /* 24px */;
 }
 
 .mb-10 {
@@ -1153,6 +1185,10 @@ select {
   height: 10rem;
 }
 
+.h-50 {
+  height: 13rem;
+}
+
 .h-60 {
   height: 16rem;
 }
@@ -1255,6 +1291,19 @@ select {
 
 .w-8 {
   width: 2rem;
+}
+
+
+.w-\[10\%\] {
+  width: 10%;
+}
+
+.w-\[40\%\] {
+  width: 40%;
+}
+
+.w-\[30\%\] {
+  width: 30%;
 }
 
 .w-\[45\%\] {
@@ -1469,6 +1518,27 @@ select {
   background-color: rgb(164 28 48 / var(--tw-bg-opacity)) /* #a41c30 */;
 }
 
+.hover\:bg-maroon2:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(192 28 48 / var(--tw-bg-opacity))  /* #a41c30 */;
+}
+
+
+.hover\:bg-dmaroon:hover {
+  --tw-bg-opacity: 1;
+  background-color: #521018 
+}
+
+.active\:bg-dmaroon:active {
+  --tw-bg-opacity: 1;
+  background-color: #521018 
+}
+
+.focus\:bg-dmaroon:focus {
+  --tw-bg-opacity: 1;
+  background-color: #521018 
+}
+
 .rounded-br-xl {
   border-bottom-right-radius: 0.75rem /* 12px */;
 }
@@ -1532,6 +1602,19 @@ select {
 .bg-maroon {
   --tw-bg-opacity: 1;
   background-color: rgb(164 28 48 / var(--tw-bg-opacity));
+}
+
+
+.bg-maroon\/10 {
+  background-color: rgb(164 28 48 / 0.10);
+}
+
+.bg-maroon\/20 {
+  background-color: rgb(164 28 48 / 0.20);
+}
+
+.bg-maroon\/40 {
+  background-color: rgb(164 28 48 / 0.40);
 }
 
 .bg-maroon\/5 {
@@ -1732,6 +1815,10 @@ select {
   padding-bottom: 6rem;
 }
 
+.pb-20 {
+  padding-bottom: 5rem /* 80px */;
+}
+
 .pb-24 {
   padding-bottom: 6rem;
 }
@@ -1805,6 +1892,11 @@ select {
 
 .font-serif {
   font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+}
+
+.text-1xl {
+  font-size: 0.875rem;
+  line-height: 1.75rem;
 }
 
 .text-2xl {
@@ -1888,11 +1980,6 @@ select {
 .text-maroon {
   --tw-text-opacity: 1;
   color: rgb(164 28 48 / var(--tw-text-opacity));
-}
-
-.text-dmaroon {
-  --tw-text-opacity: 100;
-    color: #521018;
 }
 
 .text-dmaroon {

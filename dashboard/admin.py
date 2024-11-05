@@ -4,6 +4,8 @@ from .models import Election, Position, Candidate, Student,VoteSlip
 from django.contrib import admin
 from django.contrib.admin.sites import AdminSite
 from elected.admin import admin_site
+from django.templatetags.static import static
+from django.utils.html import format_html
 
 class PositionInline(admin.TabularInline):
     model = Position
@@ -27,7 +29,7 @@ class PositionAdmin(admin.ModelAdmin):
 
 class CandidateAdmin(admin.ModelAdmin):
     form = CandidateAdminForm
-    list_display = ['name', 'year', 'position', 'election','vote_count']
+    list_display = ['display_image_with_name', 'year', 'position', 'election','vote_count']
     search_fields = ('name',)
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
@@ -38,6 +40,22 @@ class CandidateAdmin(admin.ModelAdmin):
             else:
                 kwargs["queryset"] = Position.objects.none()
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
+    
+    
+    
+    
+    def display_image_with_name(self, obj):
+        if obj.image:
+            # image_url = static(obj.image)  # Adjust to your image's path
+            return format_html(
+                '<div style="display: flex; align-items: center;">'
+                '<img src="{}" style="height: 50px; width: 50px; border-radius: 25px; margin-right: 10px;"/>'
+                '<span>{}</span>'
+                '</div>',
+                obj.image.url, obj.name)  # Adjust the border-radius as needed
+        return "(No image)"
+
+    display_image_with_name.short_description = 'Image Preview'  # Optional label for the column
 
     
     def save_model(self, request, obj, form, change):   
@@ -59,9 +77,9 @@ class VoteSlipAdmin(admin.ModelAdmin):
     
     list_filter = ('election',)
 
-admin_site.register(VoteSlip, VoteSlipAdmin)
-admin_site.register(Student, StudentAdmin)
-admin_site.register(Election, ElectionAdmin)
-admin_site.register(Position, PositionAdmin) 
-admin_site.register(Candidate, CandidateAdmin)
+admin.site.register(VoteSlip, VoteSlipAdmin)
+admin.site.register(Student, StudentAdmin)
+admin.site.register(Election, ElectionAdmin)
+admin.site.register(Position, PositionAdmin) 
+admin.site.register(Candidate, CandidateAdmin)
 

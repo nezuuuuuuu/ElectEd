@@ -4,6 +4,8 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
+from django.contrib.auth import logout as auth_logout
+
 
 Logged_id=None
 
@@ -41,15 +43,19 @@ def votes(request):
  
     return render(request, 'dashboard_templates/dashboard_votes.html', {'elections': election} |  get_user_info(request))
 
-def votes_candidates(request, election_id):  # Accept election_id as a parameter
-    election = get_object_or_404(Election, id=election_id)  
-    positions = Position.objects.filter(election=election)  
-    candidates = Candidate.objects.filter(election=election)    
-    return render(request, 'dashboard_templates/dashboard_votes_candidates.html', {
+def votes_candidates(request, election_id):
+    election = get_object_or_404(Election, id=election_id)
+    positions = Position.objects.filter(election=election)
+    candidates = Candidate.objects.filter(election=election).select_related('position')
+
+    context = {
         'positions': positions,
         'candidates': candidates,
-        'election': election 
-    }| get_user_info(request))
+        'election': election
+    }
+    context.update(get_user_info(request))  # Merging user info
+    return render(request, 'dashboard_templates/dashboard_votes_candidates.html', context)
+
 
 def get_positions(request, election_id):
     positions = Position.objects.filter(election_id=election_id)
@@ -60,8 +66,8 @@ def guidelines(request):
     return render(request, 'dashboard_templates/dashboard_guidelines.html', get_user_info(request))
 
 def logout(request):
-    # Implement logout functionality
-    return
+    auth_logout(request)  # Logs the user out
+    return redirect('home')  # Redirects to the main dashboard view
 
 
 def admins(request):
