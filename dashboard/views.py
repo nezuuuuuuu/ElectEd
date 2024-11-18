@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import logout as auth_logout
-
+import os
 
 Logged_id=None
 
@@ -15,14 +15,24 @@ def get_user_info(request):
     user = request.user
     id = {(user.get_short_name()).split(' ')[0]}
     Logged_id = str(id).replace('-', '').replace('{', '').replace('}', '').replace("'", '').replace('"', '').strip()
+    initials=user.username.split('.')[0][0].upper()  + user.username.split('.')[1].split('@')[0][0].upper() 
+    print(initials)
+    if os.path.exists(f'static/initials/{initials}.jpg'):
+        print('profile exist')
+    else:
 
+        create_profile_image(initials, f'{initials}.jpg')
+    
     user_info = {
         'username': user.username,
         'email': user.email,
         'id' : id,
-        'lastname' : user.last_name
+        'lastname' : user.last_name,
+        'initials' :  initials
         
     }
+   
+  
     return user_info
 
 def main(request):
@@ -79,3 +89,36 @@ def admins(request):
         print(f"User {user.email} is now an admin.")
     except User.DoesNotExist:
         print("User not found")
+
+
+
+
+
+
+from PIL import Image, ImageDraw, ImageFont
+
+def create_profile_image(initials, output_path, size=256, text_color="white"):
+ 
+   
+    bg_color = (164, 28, 48)  
+    img = Image.new("RGB", (size, size), color=bg_color)
+    draw = ImageDraw.Draw(img)
+
+   
+    try:
+        font = ImageFont.truetype("arial.ttf", int(size / 2))
+    except IOError:
+        font = ImageFont.load_default()
+
+   
+    bbox = draw.textbbox((0, 0), initials, font=font)
+    text_width, text_height = bbox[2] - bbox[0], bbox[3] - bbox[1]
+    text_x = (size - text_width) // 2
+    text_y = (size - text_height) // 2
+
+   
+    draw.text((text_x, text_y), initials, fill=text_color, font=font)
+
+   
+    img.save(f'static/initials/{output_path}')
+    print( output_path)
