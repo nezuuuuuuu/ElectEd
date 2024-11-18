@@ -8,4 +8,5 @@ urlpatterns = [
     path('guidelines/', views.guidelines, name='guidelines'),
     path('get-positions/<int:election_id>/', views.get_positions, name='get_positions'),
     path('logout/', views.logout, name='logout'), 
+    path('submit_vote/<int:candidate_id>/', views.submit_vote, name='submit_vote'),
 ]

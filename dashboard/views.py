@@ -79,3 +79,16 @@ def admins(request):
         print(f"User {user.email} is now an admin.")
     except User.DoesNotExist:
         print("User not found")
+
+def submit_vote(request, candidate_id):
+    if request.method == "POST":
+        try:
+            candidate = Candidate.objects.get(id=candidate_id)
+            candidate.vote_count += 1  # Increment vote count
+            candidate.save()
+
+            # Return a JSON response indicating success
+            return JsonResponse({"message": "Vote successfully submitted!", "vote_count": candidate.vote_count})
+        except Candidate.DoesNotExist:
+            return JsonResponse({"error": "Candidate not found!"}, status=404)
+    return JsonResponse({"error": "Invalid request method"}, status=400)

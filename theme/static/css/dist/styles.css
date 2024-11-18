@@ -1574,6 +1574,30 @@ select {
   background-image: linear-gradient(to right, var(--tw-gradient-stops));
 }
 
+/* Existing CSS classes */
+.hover\:bg-maroon:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(164 28 48 / var(--tw-bg-opacity)) /* #a41c30 */;
+}
+
+.active\:bg-dmaroon:active {
+  --tw-bg-opacity: 1;
+  background-color: #521018; /* Dark maroon for active state */
+}
+
+.bg-dmaroon {
+  background-color: #521018; /* Dark maroon for the selected button */
+}
+
+.bg-maroon {
+  background-color: rgb(164 28 48); /* Light maroon */
+}
+
+.hover\:bg-dmaroon:hover {
+  --tw-bg-opacity: 1;
+  background-color: #521018; /* Hover effect for dark maroon */
+}
+
 .rounded-br-xl {
   border-bottom-right-radius: 0.75rem /* 12px */;
 }

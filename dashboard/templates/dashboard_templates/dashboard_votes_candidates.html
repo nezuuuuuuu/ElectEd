@@ -14,7 +14,7 @@
             <div class='container grid w-3 grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 mb-28 px-28 xl:grid-cols-3'>
                 {% for candidate in candidates %}
                     {% if candidate.position == position and candidate.election == election %}
-                        <div class="hover:scale-105 transform transition-transform hover:shadow-2xl transition-shadow flex flex-col items-center justify-center px-10 py-5 text-center border-4 border-maroon rounded-xl text-maroon overflow-hidden w-60 h-full">
+                        <div class="hover:scale-105 transform transition-transform hover:shadow-2xl transition-shadow flex flex-col items-center justify-center px-10 py-5 text-center border-2 border-maroon rounded-xl text-maroon overflow-hidden w-60 h-full">
                             <div class="w-40 h-40 mb-2 overflow-hidden border-4 rounded-full border-maroon py10">
                                 {% if candidate.image %}
                                     <img src="{{ candidate.image.url }}" class="h-full object-cover rounded-full" alt="{{ candidate.name }}">
@@ -59,7 +59,7 @@
                 Reset Changes
             </button>
 
-            <button onclick="confirmSubmit()" class="px-10 py-2 my-2     font-medium text-white bg-maroon rounded-full hover:bg-gradient-to-r from-dmaroon to-maroon w-32">
+            <button type="submit" onclick="confirmSubmit()" class="px-10 py-2 my-2     font-medium text-white bg-maroon rounded-full hover:bg-gradient-to-r from-dmaroon to-maroon w-32">
                 Submit Votes
             </button>
         </div>
@@ -99,33 +99,62 @@
     </section>
 
     <script>
-
+        
         const selectedCandidates = {}; // Track selected candidates by position
             
         function selectCandidate(position, candidateName, button) {
+            // Get the parent container (the div holding the candidate's details)
+            const container = button.closest('.border-maroon');
+
+            // If there's a previously selected candidate for this position, deselect it
             if (selectedCandidates[position]) {
-                // Deselect previous candidate's vote button if there's an existing selection
                 const previousButton = selectedCandidates[position].button;
-                previousButton.classList.remove('bg-dmaroon');
-                previousButton.classList.add('bg-maroon');
-                previousButton.innerHTML = '<span class="text-base font-medium">Vote</span>';
+                const previousContainer = selectedCandidates[position].container;
+
+                if (previousButton !== button) {
+                    // Reset the previous button and container
+                    previousButton.classList.remove('bg-dmaroon');
+                    previousButton.classList.add('bg-maroon');
+                    previousButton.innerHTML = '<span class="text-base font-medium">Vote</span>';
+                    
+                    // Reset the previous container's border color and size
+                    previousContainer.style.borderColor = 'maroon'; // Reset to original border color
+                    previousContainer.style.borderWidth = '2px'; // Reset to original border size
+                }
             }
 
             // Select the current candidate
-            selectedCandidates[position] = { name: candidateName, button: button };
+            selectedCandidates[position] = { 
+                name: candidateName, 
+                button: button,
+                container: container
+            };
+
+            // Change the button style
             button.classList.add('bg-dmaroon');
             button.classList.remove('bg-maroon');
-            button.innerHTML = '<span class="text-2xl font-bold">✔</span>';  
-            
+            button.innerHTML = '<span class="text-2xl font-bold">✔</span>';
+
+            // Increase the container's border color and size
+            container.style.borderColor = '#A41C30'; // Set border color to dmaroon
+            container.style.borderWidth = '5px'; // Set border size to 8px
         }
 
         function resetChanges() {
-            Object.values(selectedCandidates).forEach(({ button }) => {
+            Object.values(selectedCandidates).forEach(({ button, container }) => {
+                // Reset button styles
                 button.classList.remove('bg-dmaroon');
                 button.classList.add('bg-maroon');
+                button.classList.add('active:bg-dmaroon');
                 button.innerText = 'Vote';
+                
+                // Reset container's border color and size
+                container.style.borderColor = 'maroon';  // Reset to original border color
+                container.style.borderWidth = '2px';  // Reset to original border width
             });
-            selectedCandidates = {}; // Clear selected candidates
+
+            // Clear the selected candidates object
+            selectedCandidates = {};  // No selected candidates anymore
         }
         // Function to open the modal and set candidate details
         function openModal(name, year, course, positionTitle, imageUrl, platform) {
@@ -156,13 +185,53 @@
         // });
 
         // Function for submit confirmation
+        // Function for submit confirmation
         function confirmSubmit() {
-            if (confirm("Are you sure you want to submit your votes?")) {
+            console.log('Submit button clicked'); // Debugging line
+
+            let selectedCandidatesList = [];
+            
+            // Collect data of selected candidates from the selected buttons (or containers)
+            for (const position in selectedCandidates) {
+                const selectedCandidate = selectedCandidates[position];
+                const candidateButton = selectedCandidate.button;
+
+                // Gather candidate information from the candidate's container
+                const candidateContainer = candidateButton.closest('.candidate-container');
+                const candidateName = candidateContainer.querySelector('.candidate-name').innerText;
+                const candidatePosition = candidateContainer.querySelector('.candidate-position').innerText;
+
+                // Add the selected candidate data to the list
+                selectedCandidatesList.push({
+                    name: candidateName,
+                    position: candidatePosition
+                });
+            }
+
+            if (selectedCandidatesList.length === 0) {
+                alert("No candidates selected. Please select candidates before submitting.");
+                return;
+            }
+
+            let confirmationMessage = "Are you sure you want to submit your votes?\n\nSelected Candidates:\n";
+            selectedCandidatesList.forEach(candidate => {
+                confirmationMessage += `${candidate.position}: ${candidate.name}\n`;
+            });
+
+            if (confirm(confirmationMessage)) {
                 alert("Your votes have been submitted.");
             } else {
                 alert("Submission canceled.");
             }
         }
+
+
+
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.vote-button')) {
+                return;
+            }
+        });
 
         
     </script>
