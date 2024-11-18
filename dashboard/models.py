@@ -113,7 +113,19 @@ class Candidate(models.Model):
 class VoteSlip(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='voteslip')
     election = models.ForeignKey(Election, on_delete=models.CASCADE, related_name='voteslip')
-    votes = models.CharField(max_length=20, default="NULL")
+    candidates = models.ManyToManyField(Candidate, related_name='voteslips', null=True)
 
     def __str__(self):
         return f'{self.student} ({self.election})'
+
+    def save(self, *args, **kwargs):
+        # Ensure each student has a single VoteSlip per election
+        if VoteSlip.objects.filter(student=self.student, election=self.election).exists():
+            raise ValidationError("Each student can only submit one VoteSlip per election.")
+
+        super().save(*args, **kwargs)  # Save the VoteSlip itself first
+
+        # Update the vote counts for each selected candidate
+        for candidate in self.candidates.all():
+            candidate.vote_count += 1
+            candidate.save()

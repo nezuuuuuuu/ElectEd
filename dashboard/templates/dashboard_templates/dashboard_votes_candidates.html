@@ -1,111 +1,169 @@
-{% extends 'dashboard_base.html' %}
-{% load static %}
+    {% extends 'dashboard_base.html' %}
+    {% load static %}
 
-{% block title %}Dashboard-Votes-Candidates{% endblock %}
+    {% block title %}Dashboard-Votes-Candidates{% endblock %}
 
-{% block body %}
-<section class='flex flex-col justify-center py-12 xl:py-0 mx-auto max-w-5xl'>
-    <h1 class='pl-6 text-4xl font-bold text-maroon mb-4 pt-2 px-28'>
-        CAST YOUR VOTES NOW for <span class="text-dmaroon">{{ election.title }}</span>!
-    </h1>
-    {% for position in positions %}
-    <div class='flex flex-col items-center justify-center gap-3 pt-10 text-center'>
-        <h1 class='pl-6 text-2xl font-bold text-dark-maroon mb-4 pt-2 px-28'>{{ position.title }}</h1>
-        <div class='container grid w-3 grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 mb-28 px-28 xl:grid-cols-3'>
-            {% for candidate in candidates %}
-                {% if candidate.position == position and candidate.election == election %}
-                    <div class="flex flex-col items-center justify-center px-10 py-5 text-center border-4 border-maroon rounded-xl text-maroon overflow-hidden w-60 h-full">
-                        <div class="w-40 h-40 mb-2 overflow-hidden border-4 rounded-full border-maroon py10">
-                            {% if candidate.image %}
-                                <img src="{{ candidate.image.url }}" class="h-full object-cover rounded-full" alt="{{ candidate.name }}">
-                            {% else %}
-                                <img src="{% static 'landingpics/default.png' %}" class="h-full object-cover rounded-full" alt="No Image">
-                            {% endif %}
-                        </div>
-                        <div class="container py-5">
-                            <h1 class='text-center text-2xl font-bold bg-white'>{{ candidate.name }}</h1>
-                            <h3 class='text-center font-medium bg-white'>{{ candidate.year }}</h3>
-                        </div>
-                        <div class="container flex flex-row justify-center gap-2">
-                            <a>
-                                <button class="hover:bg-maroon2 active:bg-dmaroon focus:bg-dmaroon px-12 py-2 mb-2 font-medium rounded-full bg-maroon text-white2 w-fit">
-                                    Vote
+    {% block body %}
+    <section class='flex flex-col justify-center py-12 xl:py-0 mx-auto max-w-5xl'>
+        <h1 class='pl-6 text-4xl font-bold text-maroon mb-4 pt-2 px-28'>
+            CAST YOUR VOTES NOW for <span class="text-dmaroon">{{ election.title }}</span>!
+        </h1>
+        {% for position in positions %}
+        <div class='flex flex-col items-center justify-center gap-3 pt-10 text-center'>
+            <h1 class='pl-6 text-2xl font-bold text-dark-maroon mb-4 pt-2 px-28'>{{ position.title }}</h1>
+            <div class='container grid w-3 grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 mb-28 px-28 xl:grid-cols-3'>
+                {% for candidate in candidates %}
+                    {% if candidate.position == position and candidate.election == election %}
+                        <div class="hover:scale-105 transform transition-transform hover:shadow-2xl transition-shadow flex flex-col items-center justify-center px-10 py-5 text-center border-4 border-maroon rounded-xl text-maroon overflow-hidden w-60 h-full">
+                            <div class="w-40 h-40 mb-2 overflow-hidden border-4 rounded-full border-maroon py10">
+                                {% if candidate.image %}
+                                    <img src="{{ candidate.image.url }}" class="h-full object-cover rounded-full" alt="{{ candidate.name }}">
+                                {% else %}
+                                    <img src="{% static 'landingpics/default.png' %}" class="h-full object-cover rounded-full" alt="No Image">
+                                {% endif %}
+                            </div>
+                            <div class="container py-5">
+                                <h1 class='text-center text-2xl font-bold bg-transparent'>{{ candidate.name }}</h1>
+                                <h3 class='text-center font-medium bg-transparent'>{{ candidate.year }}</h3>
+                            </div>
+                            <div class="container flex flex-row justify-center gap-2">
+                                <a>
+                                    <button 
+                                        onclick="selectCandidate('{{ position.title }}', '{{ candidate.name }}', this)" 
+                                        class="vote-button hover:bg-maroon2 active:bg-dmaroon focus:bg-dmaroon px-12 py-2 mb-2 font-medium rounded-full bg-maroon text-white2 w-36">
+                                        Vote
+                                    </button>
+                                </a>
+                                <button onclick="openModal(
+                                    '{{ candidate.name }}', 
+                                    '{{ candidate.year }}', 
+                                    '{{ candidate.course }}', 
+                                    '{{ position.title }}', 
+                                    '{% if candidate.image %}{{ candidate.image.url }}{% else %}{% static 'landingpics/guwang.png' %}{% endif %}', 
+                                    '{{ candidate.platforms|escapejs }}')" 
+                                    class="transition-transform hover:bg-maroon hover:text-white2 px-4 py-2 mb-2 font-medium rounded-full border-2 border-maroon w-32 text-maroon">
+                                    View&nbsp;Details
                                 </button>
-                            </a>
-                            <button onclick="openModal(
-                                '{{ candidate.name }}', 
-                                '{{ candidate.year }}', 
-                                '{{ candidate.course }}', 
-                                '{{ position.title }}', 
-                                '{% if candidate.image %}{{ candidate.image.url }}{% else %}{% static 'landingpics/guwang.png' %}{% endif %}', 
-                                '{{ candidate.platforms|escapejs }}')" 
-                                class="hover:bg-maroon hover:text-white2 px-4 py-2 mb-2 font-medium rounded-full border-2 border-maroon w-32 text-maroon">
-                                View&nbsp;Details
-                            </button>
+                            </div>
                         </div>
-                    </div>
-                {% endif %}
-            {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </div>
         </div>
-    </div>
-    {% endfor %}
-    
-    <!-- Modal Structure -->
-    <div id="candidateModal" class="fixed inset-0 bg-maroon/10 items-center justify-center flex hidden">
-        <div class="bg-white ml-24 left-52 p-8 shadow-md rounded-lg w-[70%] flex-col items-start justify-start my-20 modal-content">
-            <button onclick="closeModal()" class="absolute top-4 right-4 mx-8 my-8 text-red-500 font-bold">
-                <img src="{% static 'landingpics/arrowleft.png' %}" class="p-2  bg-maroon/40 hover:border-maroon h-full object-cover rounded-lg" alt="No Image">
+        {% endfor %}
+        
+
+        <!-- Submit Button -->
+        <div class="flex justify-between mt-8 mx-28 mb-10">
+            <button onclick="resetChanges()" class="hover:bg-maroon hover:text-white2 px-4 py-2 my-2 font-medium rounded-full border-2 border-maroon w-32 text-maroon">
+                Reset Changes
             </button>
-            
-            <!-- image and info -->
-            <div class="mx-20 my-20 flex items-center"> 
-                <img id="modalImage" src="" alt="Candidate Image" class="w-2 h-50 mb-4 mx-12 border-4 border-maroon rounded-full object-cover">
-                <div class="mx-10">
-                    <p class="text-1xl text-maroon">Vote</p>
-                    <h2 id="modalName" class="text-2xl text-dmaroon font-bold mb-2"></h2>
-                    <p class="text-1xl text-maroon">for <span id="modalPosition" class="font-bold text-maroon"></span></p>
-                    <div class="flex items-center">
-                        <img src="{% static 'landingpics/graduation cap.png' %}" alt="" class="mr-2"> 
-                        <p id="modalCourse" class="text-1xl font-medium text-maroon"></p>
-                </div>   
-                <div class="flex items-center">
-                        <img src="{% static 'landingpics/age.png' %}" alt="" class="mr-4"> 
-                        <p id="modalYear" class="text-1xl font-medium text-maroon"></p>
-                </div>
-                </div>
-            </div>
 
-            <div class="mx-20 my-20 flex-col justify-center items-center">
-                <p class="text-2xl text-maroon font-bold">Campaign Platform</p>
-                <p id="modalPlatform" class="mt-4 text-1sxl text-maroon font-medium">Platform 1</p>   
+            <button onclick="confirmSubmit()" class="px-10 py-2 my-2     font-medium text-white bg-maroon rounded-full hover:bg-gradient-to-r from-dmaroon to-maroon w-32">
+                Submit Votes
+            </button>
+        </div>
+
+        <!-- Modal Structure -->
+        <div id="candidateModal" class="fixed inset-0 bg-maroon/10 items-center justify-center flex hidden">
+            <div class="bg-white ml-24 left-52 p-8 shadow-md rounded-lg w-[70%] flex-col items-start justify-start my-20 modal-content">
+                <button onclick="closeModal()" class="absolute top-4 right-4 mx-8 my-8 text-red-500 font-bold">
+                    <img src="{% static 'landingpics/arrowleft.png' %}" class="p-2  bg-maroon/40 hover:border-maroon h-full object-cover rounded-lg" alt="No Image">
+                </button>
+                
+                <!-- image and info -->
+                <div class="mx-20 my-20 flex items-center"> 
+                    <img id="modalImage" src="" alt="Candidate Image" class="w-2 h-50 mb-4 mx-12 border-4 border-maroon rounded-full object-cover">
+                    <div class="mx-10">
+                        <p class="text-1xl text-maroon">Vote</p>
+                        <h2 id="modalName" class="text-2xl text-dmaroon font-bold mb-2"></h2>
+                        <p class="text-1xl text-maroon">for <span id="modalPosition" class="font-bold text-maroon"></span></p>
+                        <div class="flex items-center">
+                            <img src="{% static 'landingpics/graduation cap.png' %}" alt="" class="mr-2"> 
+                            <p id="modalCourse" class="text-1xl font-medium text-maroon"></p>
+                    </div>   
+                    <div class="flex items-center">
+                            <img src="{% static 'landingpics/age.png' %}" alt="" class="mr-4"> 
+                            <p id="modalYear" class="text-1xl font-medium text-maroon"></p>
+                    </div>
+                    </div>
+                </div>
+
+                <div class="mx-20 my-20 flex-col justify-center items-center">
+                    <p class="text-2xl text-maroon font-bold">Campaign Platform</p>
+                    <p id="modalPlatform" class="mt-4 text-1sxl text-maroon font-medium">Platform 1</p>   
+                </div>
             </div>
         </div>
-    </div>
 
-</section>
+    </section>
 
-<script>
-    // Function to open the modal and set candidate details
-    function openModal(name, year, course, positionTitle, imageUrl, platform) {
-        console.log(platform);
-        document.getElementById("modalName").innerText = name;
-        document.getElementById("modalYear").innerText = year;
-        document.getElementById("modalImage").src = imageUrl;
-        document.getElementById("modalCourse").innerText = course; 
-        document.getElementById("modalPosition").innerText = positionTitle;
-        document.getElementById("modalPlatform").innerText = platform || "No platform information available"; 
-        document.getElementById("candidateModal").classList.remove("hidden");
-    }
+    <script>
 
-    // Function to close the modal
-    function closeModal() {
-        document.getElementById("candidateModal").classList.add("hidden");
-    }
+        const selectedCandidates = {}; // Track selected candidates by position
+            
+        function selectCandidate(position, candidateName, button) {
+            if (selectedCandidates[position]) {
+                // Deselect previous candidate's vote button if there's an existing selection
+                const previousButton = selectedCandidates[position].button;
+                previousButton.classList.remove('bg-dmaroon');
+                previousButton.classList.add('bg-maroon');
+                previousButton.innerHTML = '<span class="text-base font-medium">Vote</span>';
+            }
 
+            // Select the current candidate
+            selectedCandidates[position] = { name: candidateName, button: button };
+            button.classList.add('bg-dmaroon');
+            button.classList.remove('bg-maroon');
+            button.innerHTML = '<span class="text-2xl font-bold">✔</span>';  
+            
+        }
 
-    //styling
-    document.getElementById('voteButton').addEventListener('click', function() {
-        this.innerHTML = '<img src="landingpics/checkmark.png" alt="Check" class="w-6 h-6">'; // Replaces "Vote" with check image
-    });
-</script>
-{% endblock %}
+        function resetChanges() {
+            Object.values(selectedCandidates).forEach(({ button }) => {
+                button.classList.remove('bg-dmaroon');
+                button.classList.add('bg-maroon');
+                button.innerText = 'Vote';
+            });
+            selectedCandidates = {}; // Clear selected candidates
+        }
+        // Function to open the modal and set candidate details
+        function openModal(name, year, course, positionTitle, imageUrl, platform) {
+            console.log(platform);
+            document.getElementById("modalName").innerText = name;
+            document.getElementById("modalYear").innerText = year;
+            document.getElementById("modalImage").src = imageUrl;
+            document.getElementById("modalCourse").innerText = course; 
+            document.getElementById("modalPosition").innerText = positionTitle;
+            document.getElementById("modalPlatform").innerText = platform || "No platform information available"; 
+            document.getElementById("candidateModal").classList.remove("hidden");
+            document.body.classList.add("no-scroll");
+        }
+
+        // Function to close the modal
+        function closeModal() {
+            document.getElementById("candidateModal").classList.add("hidden");
+            document.body.classList.remove("no-scroll");
+        }
+
+        //styling
+        document.getElementById('voteButton').addEventListener('click', function() {
+            this.innerHTML = '<img src="landingpics/checkmark.png" alt="Check" class="w-6 h-6">'; // Replaces "Vote" with check image
+        });
+
+        // document.getElementById("candidateModal").addEventListener("click", (event) => {
+        //     event.stopPropagation(); // Prevent modal close from affecting other elements
+        // });
+
+        // Function for submit confirmation
+        function confirmSubmit() {
+            if (confirm("Are you sure you want to submit your votes?")) {
+                alert("Your votes have been submitted.");
+            } else {
+                alert("Submission canceled.");
+            }
+        }
+
+        
+    </script>
+    {% endblock %}
