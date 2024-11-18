@@ -100,7 +100,7 @@ ElectEd is a secure voting platform for students, designed to replace traditiona
     <a href="https://www.figma.com/design/7Ea0jiaHDyttc6uYgjvAzE/FIGMA-PROJECTS?node-id=746-955&t=6q5gjlDmc9mi06Cr-1">
     ElectEd-UI/UX
     </a>
-- ### GRANTT-CHART
+- ### GANTT-CHART
     <a href="https://cebuinstituteoftechnology-my.sharepoint.com/:x:/g/personal/johnmark_econar_cit_edu/EbW35uG6l5REuPsFjlDHpuQBZt89CwVZcSAsOVjD5R5soA?e=SK6QRP">
     ElectEd-Gantt-Chart
     </a>
