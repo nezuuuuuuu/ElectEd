@@ -1589,6 +1589,10 @@ select {
   background-color: #521018; /* Dark maroon for the selected button */
 }
 
+.bg-dmaroon\/80 {
+  background-color: rgb(82 16 24 / 0.8);
+}
+
 .bg-maroon {
   background-color: rgb(164 28 48); /* Light maroon */
 }

@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import logout as auth_logout
+from django.db.models import Q  # Import Q for complex queries
 
 
 Logged_id=None
@@ -35,13 +36,25 @@ def main(request):
     })
 
 def votes(request):
-    user_info=get_user_info(request)
+    user_info = get_user_info(request)
     global Logged_id
 
-    student = get_object_or_404(Student, student_id=Logged_id)  # Ensure you handle cases where the student does not exist
-    election = Election.objects.filter(departments__contains=student.department)
- 
-    return render(request, 'dashboard_templates/dashboard_votes.html', {'elections': election} |  get_user_info(request))
+    student = get_object_or_404(Student, student_id=Logged_id)
+    elections = Election.objects.filter(departments__contains=student.department)
+
+    # Search functionality
+    query = request.GET.get('q', '')
+    if query:
+        elections = elections.filter(
+            Q(title__icontains=query) | 
+            Q(description__icontains=query)
+        )
+
+    context = {
+        'elections': elections,
+    }
+    context.update(user_info)
+    return render(request, 'dashboard_templates/dashboard_votes.html', context)
 
 def votes_candidates(request, election_id):
     election = get_object_or_404(Election, id=election_id)
