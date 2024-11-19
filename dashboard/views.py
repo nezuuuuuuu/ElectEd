@@ -59,14 +59,27 @@ def votes(request):
 def votes_candidates(request, election_id):
     election = get_object_or_404(Election, id=election_id)
     positions = Position.objects.filter(election=election)
-    candidates = Candidate.objects.filter(election=election).select_related('position')
+    # candidates = Candidate.objects.filter(election=election).select_related('position')
 
+# Get the search query from the request
+    search_query = request.GET.get('q', '').strip()
+    
+    # Filter candidates based on the current election and search query
+    if search_query:
+        candidates = Candidate.objects.filter(
+            election=election,
+            name__icontains=search_query
+        )
+    else:
+        candidates = Candidate.objects.filter(election=election)
+
+    # Pass the filtered candidates, positions, and election to the template
     context = {
+        'election': election,
         'positions': positions,
         'candidates': candidates,
-        'election': election
     }
-    context.update(get_user_info(request))  # Merging user info
+
     return render(request, 'dashboard_templates/dashboard_votes_candidates.html', context)
 
 
