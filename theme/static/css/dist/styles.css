@@ -1664,8 +1664,12 @@ select {
 }
 
 
+/* .bg-dmaroon\/10 {
+  background-color: rgb(192 28 48 / 0.05);
+} */
+
 .bg-maroon\/10 {
-  background-color: rgb(164 28 48 / 0.10);
+  background-color: rgb(164 28 48 / 0.1);
 }
 
 .bg-maroon\/20 {

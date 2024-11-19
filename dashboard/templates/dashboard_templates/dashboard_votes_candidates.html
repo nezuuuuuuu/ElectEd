@@ -29,7 +29,7 @@
                             <div class="container flex flex-row justify-center gap-2">
                                 <a>
                                     <button 
-                                        onclick="selectCandidate('{{ position.title }}', '{{ candidate.name }}', this)" 
+                                        onclick="selectCandidate('{{ position.title }}', '{{ candidate.name }}','{{candidate.id}}', this)" 
                                         class="vote-button hover:bg-maroon2 active:bg-dmaroon focus:bg-dmaroon px-12 py-2 mb-2 font-medium rounded-full bg-maroon text-white2 w-36">
                                         Vote
                                     </button>
@@ -102,7 +102,7 @@
         
         const selectedCandidates = {}; // Track selected candidates by position
             
-        function selectCandidate(position, candidateName, button) {
+        function selectCandidate(position, candidateName,candidate_id, button) {
             // Get the parent container (the div holding the candidate's details)
             const container = button.closest('.border-maroon');
 
@@ -127,7 +127,8 @@
             selectedCandidates[position] = { 
                 name: candidateName, 
                 button: button,
-                container: container
+                container: container,
+                candidate_id: candidate_id
             };
 
             // Change the button style
@@ -186,44 +187,30 @@
 
         // Function for submit confirmation
         // Function for submit confirmation
+        
         function confirmSubmit() {
-            console.log('Submit button clicked'); // Debugging line
-
-            let selectedCandidatesList = [];
+    for (const position in selectedCandidates) {
+        
+        
+        if (selectedCandidates.hasOwnProperty(position)) {
+           
+            const candidatte = selectedCandidates[position];
+            console.log(`Position: ${position}`);
+            console.log(`Candidate Name: ${candidatte.name}`);
+            console.log(`Candidate ID: ${candidatte.candidate_id}`);
+            alert(position);
+            // Perform actions, e.g., send data to the server
             
-            // Collect data of selected candidates from the selected buttons (or containers)
-            for (const position in selectedCandidates) {
-                const selectedCandidate = selectedCandidates[position];
-                const candidateButton = selectedCandidate.button;
-
-                // Gather candidate information from the candidate's container
-                const candidateContainer = candidateButton.closest('.candidate-container');
-                const candidateName = candidateContainer.querySelector('.candidate-name').innerText;
-                const candidatePosition = candidateContainer.querySelector('.candidate-position').innerText;
-
-                // Add the selected candidate data to the list
-                selectedCandidatesList.push({
-                    name: candidateName,
-                    position: candidatePosition
-                });
-            }
-
-            if (selectedCandidatesList.length === 0) {
-                alert("No candidates selected. Please select candidates before submitting.");
-                return;
-            }
-
-            let confirmationMessage = "Are you sure you want to submit your votes?\n\nSelected Candidates:\n";
-            selectedCandidatesList.forEach(candidate => {
-                confirmationMessage += `${candidate.position}: ${candidate.name}\n`;
-            });
-
-            if (confirm(confirmationMessage)) {
-                alert("Your votes have been submitted.");
-            } else {
-                alert("Submission canceled.");
-            }
+            // Dynamically construct the URL for redirection
+            const url = `/submit_vote/${candidatte.candidate_id}/${election.id}/${candidatte.position_id}/${id}/`; // Adjust this to match your Django URL structure
+            alert("Hheehehehhe");
+            console.log(`Redirecting to: ${url}`);
+            
+            // Redirect to the constructed URL
+            window.location.href = url;
         }
+    }
+}
 
 
 
