@@ -118,6 +118,11 @@ class VoteSlip(models.Model):
     def __str__(self):
         return f'{self.student} ({self.election})'
 
+    def clean(self):
+        if VoteSlip.objects.filter(student=self.student, election=self.election).exists():
+            raise ValidationError("Each student can only submit one VoteSlip per election.")
+        super().clean()
+
     def save(self, *args, **kwargs):
         # Ensure each student has a single VoteSlip per election
         if VoteSlip.objects.filter(student=self.student, election=self.election).exists():
@@ -125,7 +130,8 @@ class VoteSlip(models.Model):
 
         super().save(*args, **kwargs)  # Save the VoteSlip itself first
 
-        # Update the vote counts for each selected candidate
+        # Update the vote counts for each selected candidate in the ManyToMany relationship
         for candidate in self.candidates.all():
             candidate.vote_count += 1
-            candidate.save()
+        Candidate.objects.bulk_update(self.candidates.all(), ['vote_count'])  # Efficient bulk update
+
