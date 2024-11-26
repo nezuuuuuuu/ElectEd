@@ -42,8 +42,6 @@ class Election(models.Model):
         if not self.departments:
             raise ValidationError("At least one department must be selected.")
         super().clean()
-
-
 # Position per election
 class Position(models.Model):
     title = models.CharField(max_length=255)
@@ -82,8 +80,6 @@ class Student(models.Model):
 
     def __str__(self):
         return f"{self.name} ({self.department})"  # Display name and department
-
-
 # Candidate
 class Candidate(models.Model):
     YEAR_CHOICES = [
@@ -110,22 +106,57 @@ class Candidate(models.Model):
 
 
 # Vote slip for each student
+# class VoteSlip(models.Model):
+#     student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='voteslip')
+#     election = models.ForeignKey(Election, on_delete=models.CASCADE, related_name='voteslip')
+#     candidates = models.ManyToManyField(Candidate, related_name='voteslips')  # Removed null=True
+
+#     def __str__(self):
+#         return f'{self.student} ({self.election})'
+
+#     def clean(self):
+#         if VoteSlip.objects.filter(student=self.student, election=self.election).exists():
+#             raise ValidationError("Each student can only submit one VoteSlip per election.")
+#         super().clean()
+
+#     def save(self, *args, **kwargs):
+#         # Ensure each student has a single VoteSlip per election
+#         if VoteSlip.objects.filter(student=self.student, election=self.election).exists():
+#             raise ValidationError("Each student can only submit one VoteSlip per election.")
+
+#         super().save(*args, **kwargs)  # Save the VoteSlip itself first
+
+#         # Update the vote counts for each selected candidate in the ManyToMany relationship
+#         for candidate in self.candidates.all():
+#             candidate.vote_count += 1
+#         Candidate.objects.bulk_update(self.candidates.all(), ['vote_count'])  # Efficient bulk update
+from django.core.exceptions import ValidationError
+
 class VoteSlip(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='voteslip')
-    election = models.ForeignKey(Election, on_delete=models.CASCADE, related_name='voteslip')
-    candidates = models.ManyToManyField(Candidate, related_name='voteslips', null=True)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='voteslips')
+    election = models.ForeignKey(Election, on_delete=models.CASCADE, related_name='voteslips')
+    candidates = models.TextField()  # Store candidate IDs as a comma-separated string
 
     def __str__(self):
         return f'{self.student} ({self.election})'
 
+    def clean(self):
+        if VoteSlip.objects.filter(student=self.student, election=self.election).exists():
+            raise ValidationError("Each student can only submit one VoteSlip per election.")
+        super().clean()
+
     def save(self, *args, **kwargs):
-        # Ensure each student has a single VoteSlip per election
+        # Ensure each student has only one VoteSlip per election
         if VoteSlip.objects.filter(student=self.student, election=self.election).exists():
             raise ValidationError("Each student can only submit one VoteSlip per election.")
 
-        super().save(*args, **kwargs)  # Save the VoteSlip itself first
+        super().save(*args, **kwargs)  # Save the VoteSlip instance first
+
+        # Convert the candidates string into a list of candidate IDs
+        candidate_ids = self.candidates
 
         # Update the vote counts for each selected candidate
-        for candidate in self.candidates.all():
+        for candidate_id in candidate_ids:
+            candidate = Candidate.objects.get(id=candidate_id)
             candidate.vote_count += 1
-            candidate.save()
+        Candidate.objects.bulk_update(Candidate.objects.filter(id__in=candidate_ids), ['vote_count'])

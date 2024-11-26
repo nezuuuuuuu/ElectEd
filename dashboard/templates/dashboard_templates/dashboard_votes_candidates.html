@@ -3,34 +3,59 @@
 
     {% block title %}Dashboard-Votes-Candidates{% endblock %}
 
+    
+    {% block content %}
+        <!-- DONE -->
+        <!-- Search bar -->
+        <meta name="csrf-token" content="{{ csrf_token }}">
+        <form method="get" action="">
+            <div class="flex px-4 border rounded-full w-96 border-maroon">
+                <img src="/static/icons/search_icon.svg" class="cursor-pointer" alt="">
+                <input 
+                    type="text" 
+                    name="q" 
+                    class="w-full border-none" 
+                    placeholder="Search" 
+                    value="{{ request.GET.q|default:'' }}">
+                <button type="submit" class="hidden"></button>
+            </div>
+        </form>
+        
+    {% endblock %}
+
+
+    
+
     {% block body %}
-    <section class='flex flex-col justify-center py-12 xl:py-0 mx-auto max-w-5xl'>
-        <h1 class='pl-6 text-4xl font-bold text-maroon mb-4 pt-2 px-28'>
+    <section class='flex flex-col justify-center max-w-5xl py-12 mx-auto xl:py-0'>
+       
+        <h1 class='pt-2 pl-6 mb-4 text-4xl font-bold text-maroon px-28'>
             CAST YOUR VOTES NOW for <span class="text-dmaroon">{{ election.title }}</span>!
         </h1>
         {% for position in positions %}
         <div class='flex flex-col items-center justify-center gap-3 pt-10 text-center'>
-            <h1 class='pl-6 text-2xl font-bold text-dark-maroon mb-4 pt-2 px-28'>{{ position.title }}</h1>
+            <h1 class='pt-2 pl-6 mb-4 text-2xl font-bold text-dark-maroon px-28'>{{ position.title }}</h1>
             <div class='container grid w-3 grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 mb-28 px-28 xl:grid-cols-3'>
                 {% for candidate in candidates %}
                     {% if candidate.position == position and candidate.election == election %}
-                        <div class="hover:scale-105 transform transition-transform hover:shadow-2xl transition-shadow flex flex-col items-center justify-center px-10 py-5 text-center border-2 border-maroon rounded-xl text-maroon overflow-hidden w-60 h-full">
+                        <div class="flex flex-col items-center justify-center h-full px-10 py-5 overflow-hidden text-center transition-shadow transition-transform transform border-2 hover:scale-105 hover:shadow-2xl border-maroon rounded-xl text-maroon w-60">
                             <div class="w-40 h-40 mb-2 overflow-hidden border-4 rounded-full border-maroon py10">
                                 {% if candidate.image %}
-                                    <img src="{{ candidate.image.url }}" class="h-full object-cover rounded-full" alt="{{ candidate.name }}">
+                                    <img src="{{ candidate.image.url }}" class="object-cover h-full rounded-full" alt="{{ candidate.name }}">
                                 {% else %}
-                                    <img src="{% static 'landingpics/default.png' %}" class="h-full object-cover rounded-full" alt="No Image">
+                                    <img src="{% static 'landingpics/default.png' %}" class="object-cover h-full rounded-full" alt="No Image">
                                 {% endif %}
                             </div>
                             <div class="container py-5">
-                                <h1 class='text-center text-2xl font-bold bg-transparent'>{{ candidate.name }}</h1>
-                                <h3 class='text-center font-medium bg-transparent'>{{ candidate.year }}</h3>
+                                <h1 class='text-2xl font-bold text-center bg-transparent'>{{ candidate.name }}</h1>
+                                <h3 class='font-medium text-center bg-transparent'>{{ candidate.year }}</h3>
                             </div>
                             <div class="container flex flex-row justify-center gap-2">
                                 <a>
                                     <button 
-                                        onclick="selectCandidate('{{ position.title }}', '{{ candidate.name }}', this)" 
+                                        onclick="selectCandidate('{{ position.title }}', '{{ candidate.name }}','{{candidate.id}}', this)" 
                                         class="vote-button hover:bg-maroon2 active:bg-dmaroon focus:bg-dmaroon px-12 py-2 mb-2 font-medium rounded-full bg-maroon text-white2 w-36">
+
                                         Vote
                                     </button>
                                 </a>
@@ -41,7 +66,7 @@
                                     '{{ position.title }}', 
                                     '{% if candidate.image %}{{ candidate.image.url }}{% else %}{% static 'landingpics/guwang.png' %}{% endif %}', 
                                     '{{ candidate.platforms|escapejs }}')" 
-                                    class="transition-transform hover:bg-maroon hover:text-white2 px-4 py-2 mb-2 font-medium rounded-full border-2 border-maroon w-32 text-maroon">
+                                    class="w-32 px-4 py-2 mb-2 font-medium transition-transform border-2 rounded-full hover:bg-maroon hover:text-white2 border-maroon text-maroon">
                                     View&nbsp;Details
                                 </button>
                             </div>
@@ -54,44 +79,44 @@
         
 
         <!-- Submit Button -->
-        <div class="flex justify-between mt-8 mx-28 mb-10">
-            <button onclick="resetChanges()" class="hover:bg-maroon hover:text-white2 px-4 py-2 my-2 font-medium rounded-full border-2 border-maroon w-32 text-maroon">
+        <div class="flex justify-between mt-8 mb-10 mx-28">
+            <button onclick="resetChanges()" class="w-32 px-4 py-2 my-2 font-medium border-2 rounded-full hover:bg-maroon hover:text-white2 border-maroon text-maroon">
                 Reset Changes
             </button>
 
-            <button type="submit" onclick="confirmSubmit()" class="px-10 py-2 my-2     font-medium text-white bg-maroon rounded-full hover:bg-gradient-to-r from-dmaroon to-maroon w-32">
+            <button type="submit" onclick="confirmSubmit()" class="w-32 px-10 py-2 my-2 font-medium text-white rounded-full bg-maroon hover:bg-gradient-to-r from-dmaroon to-maroon" {{disabled}}>
                 Submit Votes
             </button>
         </div>
 
         <!-- Modal Structure -->
-        <div id="candidateModal" class="fixed inset-0 bg-maroon/10 items-center justify-center flex hidden">
+        <div id="candidateModal" class="fixed inset-0 flex items-center justify-center hidden bg-maroon/10">
             <div class="bg-white ml-24 left-52 p-8 shadow-md rounded-lg w-[70%] flex-col items-start justify-start my-20 modal-content">
-                <button onclick="closeModal()" class="absolute top-4 right-4 mx-8 my-8 text-red-500 font-bold">
-                    <img src="{% static 'landingpics/arrowleft.png' %}" class="p-2  bg-maroon/40 hover:border-maroon h-full object-cover rounded-lg" alt="No Image">
+                <button onclick="closeModal()" class="absolute mx-8 my-8 font-bold text-red-500 top-4 right-4">
+                    <img src="{% static 'landingpics/arrowleft.png' %}" class="object-cover h-full p-2 rounded-lg bg-maroon/40 hover:border-maroon" alt="No Image">
                 </button>
                 
                 <!-- image and info -->
-                <div class="mx-20 my-20 flex items-center"> 
-                    <img id="modalImage" src="" alt="Candidate Image" class="w-2 h-50 mb-4 mx-12 border-4 border-maroon rounded-full object-cover">
+                <div class="flex items-center mx-20 my-20"> 
+                    <img id="modalImage" src="" alt="Candidate Image" class="object-cover w-2 mx-12 mb-4 border-4 rounded-full h-50 border-maroon">
                     <div class="mx-10">
                         <p class="text-1xl text-maroon">Vote</p>
-                        <h2 id="modalName" class="text-2xl text-dmaroon font-bold mb-2"></h2>
+                        <h2 id="modalName" class="mb-2 text-2xl font-bold text-dmaroon"></h2>
                         <p class="text-1xl text-maroon">for <span id="modalPosition" class="font-bold text-maroon"></span></p>
                         <div class="flex items-center">
                             <img src="{% static 'landingpics/graduation cap.png' %}" alt="" class="mr-2"> 
-                            <p id="modalCourse" class="text-1xl font-medium text-maroon"></p>
+                            <p id="modalCourse" class="font-medium text-1xl text-maroon"></p>
                     </div>   
                     <div class="flex items-center">
                             <img src="{% static 'landingpics/age.png' %}" alt="" class="mr-4"> 
-                            <p id="modalYear" class="text-1xl font-medium text-maroon"></p>
+                            <p id="modalYear" class="font-medium text-1xl text-maroon"></p>
                     </div>
                     </div>
                 </div>
 
-                <div class="mx-20 my-20 flex-col justify-center items-center">
-                    <p class="text-2xl text-maroon font-bold">Campaign Platform</p>
-                    <p id="modalPlatform" class="mt-4 text-1sxl text-maroon font-medium">Platform 1</p>   
+                <div class="flex-col items-center justify-center mx-20 my-20">
+                    <p class="text-2xl font-bold text-maroon">Campaign Platform</p>
+                    <p id="modalPlatform" class="mt-4 font-medium text-1sxl text-maroon">Platform 1</p>   
                 </div>
             </div>
         </div>
@@ -102,7 +127,7 @@
         
         const selectedCandidates = {}; // Track selected candidates by position
             
-        function selectCandidate(position, candidateName, button) {
+        function selectCandidate(position, candidateName,candidate_id, button) {
             // Get the parent container (the div holding the candidate's details)
             const container = button.closest('.border-maroon');
 
@@ -127,7 +152,8 @@
             selectedCandidates[position] = { 
                 name: candidateName, 
                 button: button,
-                container: container
+                container: container,
+                candidate_id: candidate_id
             };
 
             // Change the button style
@@ -186,46 +212,54 @@
 
         // Function for submit confirmation
         // Function for submit confirmation
+        
         function confirmSubmit() {
-            console.log('Submit button clicked'); // Debugging line
+            // Prepare the data to send to the server
+            const votes = [];
 
-            let selectedCandidatesList = [];
-            
-            // Collect data of selected candidates from the selected buttons (or containers)
+            // Collect the selected candidates
             for (const position in selectedCandidates) {
-                const selectedCandidate = selectedCandidates[position];
-                const candidateButton = selectedCandidate.button;
-
-                // Gather candidate information from the candidate's container
-                const candidateContainer = candidateButton.closest('.candidate-container');
-                const candidateName = candidateContainer.querySelector('.candidate-name').innerText;
-                const candidatePosition = candidateContainer.querySelector('.candidate-position').innerText;
-
-                // Add the selected candidate data to the list
-                selectedCandidatesList.push({
-                    name: candidateName,
-                    position: candidatePosition
-                });
+                if (selectedCandidates.hasOwnProperty(position)) {
+                    const candidate = selectedCandidates[position];
+                    votes.push({
+                        position: position,
+                        candidate_id: candidate.candidate_id
+                    });
+                }
             }
 
-            if (selectedCandidatesList.length === 0) {
-                alert("No candidates selected. Please select candidates before submitting.");
+            // If no votes have been selected, display an alert
+            if (votes.length === 0) {
+                alert('Please select candidates to submit your votes.');
                 return;
             }
 
-            let confirmationMessage = "Are you sure you want to submit your votes?\n\nSelected Candidates:\n";
-            selectedCandidatesList.forEach(candidate => {
-                confirmationMessage += `${candidate.position}: ${candidate.name}\n`;
+            // Send the selected votes to the server
+            fetch('/dashboard/submit-vote/', {
+                method: 'POST',  // This ensures the request is a POST
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': document.querySelector('[name=csrf-token]').content // CSRF token for Django
+                },
+                body: JSON.stringify({
+                    votes: votes
+                })
+            })
+            .then(response => response.json())  // Parse the JSON response from the server
+            .then(data => {
+                if (data.success) {
+                    alert('Your votes have been successfully submitted!');
+                    // Optionally, redirect the user or clear the form
+                    // window.location.href = '/thank-you'; // Example redirection
+                } else {
+                    alert('There was an issue submitting your votes. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while submitting your votes.');
             });
-
-            if (confirm(confirmationMessage)) {
-                alert("Your votes have been submitted.");
-            } else {
-                alert("Submission canceled.");
-            }
         }
-
-
 
         document.addEventListener('click', function(event) {
             if (!event.target.closest('.vote-button')) {

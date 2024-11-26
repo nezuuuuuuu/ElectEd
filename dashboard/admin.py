@@ -72,7 +72,7 @@ class VoteSlipAdmin(admin.ModelAdmin):
 
     def display_candidates(self, obj):
         # Display a comma-separated list of candidate names in the VoteSlip
-        return ", ".join([candidate.name for candidate in obj.candidates.all()])
+        return f'{obj.election.title} {obj.student.name}'
     display_candidates.short_description = 'Voted Candidates'
 
 
