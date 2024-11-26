@@ -105,9 +105,14 @@ def votes_candidates(request, election_id):
 
     # Pass the filtered candidates, positions, and election to the template
     isDisabled= ''
+   
     student=getStudentLoggedIn(request=request)
-    if(VoteSlip.objects.get(student = student, election=election)):
-        isDisabled= 'disabled'
+    try:
+        if(VoteSlip.objects.get(student = student, election=election)):
+            isDisabled= 'disabled'
+    except Exception as e:
+        isDisabled= ''    
+
     context = {
         'election': election,
         'positions': positions,
@@ -191,6 +196,7 @@ def submit_votes(request):
             # voteslip.full_clean()  # Optional: Validate before saving
  
         voteslip.save()
+        votes_candidates(request, candidate.election.id)
             
 
 

@@ -1588,6 +1588,10 @@ select {
   background-color: #521018; /* Dark maroon for active state */
 }
 
+.bg-disablecolor{
+  background-color: gray;
+}
+
 .bg-dmaroon {
   background-color: #521018; /* Dark maroon for the selected button */
 }

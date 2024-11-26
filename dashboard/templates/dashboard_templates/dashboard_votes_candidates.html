@@ -80,13 +80,32 @@
 
         <!-- Submit Button -->
         <div class="flex justify-between mt-8 mb-10 mx-28">
+            
+            {% if disabled == 'disabled' %}
+            <button onclick="resetChanges()" class="w-32 px-4 py-2 my-2 font-medium border-0 rounded-full opacity-0" disabled>
+            
+            </button>
+
+            <button 
+                id="submitVotesBtn" 
+                type="submit" 
+                onclick="confirmSubmit()" 
+                class="w-32 px-10 py-2 my-2 font-medium text-gray-400 rounded-full bg-disablecolor cursor-not-allowed" 
+                disabled>
+                Submit Votes
+            </button>
+        {% else %}
             <button onclick="resetChanges()" class="w-32 px-4 py-2 my-2 font-medium border-2 rounded-full hover:bg-maroon hover:text-white2 border-maroon text-maroon">
                 Reset Changes
             </button>
-
-            <button type="submit" onclick="confirmSubmit()" class="w-32 px-10 py-2 my-2 font-medium text-white rounded-full bg-maroon hover:bg-gradient-to-r from-dmaroon to-maroon" {{disabled}}>
+            <button 
+                id="submitVotesBtn" 
+                type="submit" 
+                onclick="confirmSubmit()" 
+                class="w-32 px-10 py-2 my-2 font-medium text-white rounded-full bg-maroon hover:bg-gradient-to-r from-dmaroon to-maroon">
                 Submit Votes
             </button>
+        {% endif %}
         </div>
 
         <!-- Modal Structure -->
@@ -249,6 +268,7 @@
             .then(data => {
                 if (data.success) {
                     alert('Your votes have been successfully submitted!');
+                    window.location.href = '';
                     // Optionally, redirect the user or clear the form
                     // window.location.href = '/thank-you'; // Example redirection
                 } else {
@@ -267,6 +287,24 @@
             }
         });
 
-        
+        document.addEventListener('DOMContentLoaded', () => {
+            toggleButtonState(); // Call function after DOM content is loaded
+        });
+
+        function toggleButtonState() {
+            const button = document.getElementById('submitVotesBtn');
+            if (button.hasAttribute('disabled')) {
+                // Change color to gray and remove hover effect
+                button.classList.remove('hover:bg-gradient-to-r', 'from-dmaroon', 'to-maroon');
+                button.style.backgroundColor = 'gray';
+                button.style.cursor = 'not-allowed'; // Optional: show disabled cursor
+            } else {
+                // Restore original color and hover effect
+                button.classList.add('hover:bg-gradient-to-r', 'from-dmaroon', 'to-maroon');
+                button.style.backgroundColor = ''; // Use default Tailwind CSS styles
+                button.style.cursor = ''; // Restore default cursor
+            }
+        }
+
     </script>
     {% endblock %}
