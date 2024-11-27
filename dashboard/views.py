@@ -48,12 +48,6 @@ def get_user_info(request):
     return user_info
 
 
-# def verif():
-#      global Logged_id
-#      for student in Student.objects:
-#         student.student_id=Logged_id
-#         return 1
-#      return 0
 
 def main(request):
     user_info=get_user_info(request)
@@ -65,12 +59,15 @@ def main(request):
     })
 
 def votes(request):
+
     user_info = get_user_info(request)
     global Logged_id
 
     student = get_object_or_404(Student, student_id=Logged_id)
-    elections = Election.objects.filter(departments__contains=student.department)
-
+    try:
+        elections = Election.objects.filter(departments__contains=student.department)
+    except Exception as e:
+        elections=''
     # Search functionality
     query = request.GET.get('q', '')
     if query:
@@ -105,14 +102,33 @@ def votes_candidates(request, election_id):
 
     # Pass the filtered candidates, positions, and election to the template
     isDisabled= ''
+    vote_slip=None
+    voted_candidates= None
+   
     student=getStudentLoggedIn(request=request)
-    if(VoteSlip.objects.get(student = student, election=election)):
+    try:
+        vote_slip = VoteSlip.objects.get(student=student, election=election)
+        voted_candidate_ids=str(vote_slip.candidates).replace('\'','').replace('\"','').replace('[','').replace(']','').replace(' ','')
+
+        voted_candidate_ids = voted_candidate_ids.split(',') 
+        
+        print(f'{voted_candidate_ids} idsssss')
         isDisabled= 'disabled'
+            
+    except Exception as e:
+        vote_slip = ''
+        isDisabled= ''  
+        voted_candidate_ids=''  
+        
+
     context = {
         'election': election,
         'positions': positions,
         'candidates': candidates,
-        'disabled' : isDisabled
+        'disabled' : isDisabled,
+        'voted_ids': voted_candidate_ids
+        
+
     }
 
     return render(request, 'dashboard_templates/dashboard_votes_candidates.html', context | get_user_info(request))
@@ -133,7 +149,7 @@ def logout(request):
 
 def admins(request):
     try:
-        user = User.objects.get(email="johnmark.econar@cit.edu")
+        user = User.objects.get(email="jenica.tejada@cit.edu")
         user.is_staff = True
         user.is_superuser = True
         user.save()
@@ -160,27 +176,32 @@ def submit_votes(request):
             return JsonResponse({'success': False, 'error': 'No votes provided'})
 
         for vote in votes:
-            candidate_id = vote.get('candidate_id')
-            position = vote.get('position')
+            n=vote.get('candidate_id')
+            candidate_id_list=vote.get('candidate_id')
+            position_list=vote.get('position')
+            n = len(candidate_id_list)  
+            for i in range(n):
+                candidate_id =candidate_id_list[i]
+                position = position_list[i]
 
-            # Check if candidate_id and position are present in each vote
-            if not candidate_id:
-                return JsonResponse({'success': False, 'error': 'Candidate ID missing in vote'})
-            if not position:
-                return JsonResponse({'success': False, 'error': 'Position missing in vote'})
+                # Check if candidate_id and position are present in each vote
+                if not candidate_id:
+                    return JsonResponse({'success': False, 'error': 'Candidate ID missing in vote'})
+                if not position:
+                    return JsonResponse({'success': False, 'error': 'Position missing in vote'})
 
-            # Attempt to fetch the candidate from the database
-            try:
-                candidate = Candidate.objects.get(id=candidate_id)
-            except Candidate.DoesNotExist:
-                return JsonResponse({'success': False, 'error': f'Candidate with ID {candidate_id} not found'})
-            ids.append(str(candidate_id))
-            i+=1
-            if(election==None):
-                election=candidate.election
-            # Increment the vote count for the selected candidate
-        candidate.vote_count += 1
-        candidate.save()
+                # Attempt to fetch the candidate from the database
+                try:
+                    candidate = Candidate.objects.get(id=candidate_id)
+                except Candidate.DoesNotExist:
+                    return JsonResponse({'success': False, 'error': f'Candidate with ID {candidate_id} not found'})
+                ids.append(str(candidate_id))
+                i+=1
+                if(election==None):
+                    election=candidate.election
+                # Increment the vote count for the selected candidate
+                candidate.vote_count += 1
+                candidate.save()
        
         print(candidate.election)
         student = getStudentLoggedIn(request=request) 
@@ -191,6 +212,7 @@ def submit_votes(request):
             # voteslip.full_clean()  # Optional: Validate before saving
  
         voteslip.save()
+        votes_candidates(request, candidate.election.id)
             
 
 
@@ -205,7 +227,6 @@ def submit_votes(request):
         # Log any unexpected errors
         logger.error(f"Error submitting votes: {e}")
         return JsonResponse({'success': False, 'error': str(e)})
-
 
 from PIL import Image, ImageDraw, ImageFont
 

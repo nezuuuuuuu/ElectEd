@@ -37,7 +37,9 @@
             <h1 class='pt-2 pl-6 mb-4 text-2xl font-bold text-dark-maroon px-28'>{{ position.title }}</h1>
             <div class='container grid w-3 grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 mb-28 px-28 xl:grid-cols-3'>
                 {% for candidate in candidates %}
+
                     {% if candidate.position == position and candidate.election == election %}
+
                         <div class="flex flex-col items-center justify-center h-full px-10 py-5 overflow-hidden text-center transition-shadow transition-transform transform border-2 hover:scale-105 hover:shadow-2xl border-maroon rounded-xl text-maroon w-60">
                             <div class="w-40 h-40 mb-2 overflow-hidden border-4 rounded-full border-maroon py10">
                                 {% if candidate.image %}
@@ -52,12 +54,47 @@
                             </div>
                             <div class="container flex flex-row justify-center gap-2">
                                 <a>
-                                    <button 
-                                        onclick="selectCandidate('{{ position.title }}', '{{ candidate.name }}','{{candidate.id}}', this)" 
-                                        class="vote-button hover:bg-maroon2 active:bg-dmaroon focus:bg-dmaroon px-12 py-2 mb-2 font-medium rounded-full bg-maroon text-white2 w-36">
+                                    
+                                    {% if disabled == 'disabled' %}
+                                    {% with already_matched=False %}
+                                        {% for id in voted_ids %}
+                                      
+                                                {% if not already_matched and candidate.id|stringformat:"s" == id %}
+                                                    <button 
+                                                        class="vote-button  px-12 py-2 mb-2 font-medium rounded-full bg-dmaroon text-white2 w-36" disabled>
+                                                        <span class="text-2xl font-bold">✔</span>        
+                                                    </button>
+                                                    {% with True as already_matched %}
+                                               
+                                                    {% endwith %}
+                                                {% endif %}
 
-                                        Vote
-                                    </button>
+                                               
+
+                                                {% if forloop.last and already_matched %}
+                                                <button 
+                                                onclick="selectCandidate('{{position.title }}','{{position.max_selection}}', '{{ candidate.name }}','{{candidate.id}}', this)" 
+                                                class="vote-button hover:bg-maroon2 active:bg-dmaroon focus:bg-dmaroon px-12 py-2 mb-2 font-medium rounded-full bg-maroon text-white2 w-36">
+            
+                                                Vote
+                                                </button>
+                                                
+                                                {% endif %}
+                                        {% endfor %}
+                                        {% endwith %}
+                                    
+
+                                    {% else %}
+                                    <button 
+                                    onclick="selectCandidate('{{position.title }}','{{position.max_selection}}', '{{ candidate.name }}','{{candidate.id}}', this)" 
+                             class="vote-button hover:bg-maroon2 active:bg-dmaroon focus:bg-dmaroon px-12 py-2 mb-2 font-medium rounded-full bg-maroon text-white2 w-36">
+
+                             Vote
+                             </button>
+                                    {% endif %} 
+                                                 
+                           
+                                  
                                 </a>
                                 <button onclick="openModal(
                                     '{{ candidate.name }}', 
@@ -80,13 +117,32 @@
 
         <!-- Submit Button -->
         <div class="flex justify-between mt-8 mb-10 mx-28">
+            
+            {% if disabled == 'disabled' %}
+            <button onclick="resetChanges()" class="w-32 px-4 py-2 my-2 font-medium border-0 rounded-full opacity-0" disabled>
+            
+            </button>
+
+            <button 
+                id="submitVotesBtn" 
+                type="submit" 
+                onclick="confirmSubmit()" 
+                class="w-32 px-10 py-2 my-2 font-medium text-gray-400 rounded-full bg-disablecolor cursor-not-allowed" 
+                disabled>
+                Submit Votes
+            </button>
+        {% else %}
             <button onclick="resetChanges()" class="w-32 px-4 py-2 my-2 font-medium border-2 rounded-full hover:bg-maroon hover:text-white2 border-maroon text-maroon">
                 Reset Changes
             </button>
-
-            <button type="submit" onclick="confirmSubmit()" class="w-32 px-10 py-2 my-2 font-medium text-white rounded-full bg-maroon hover:bg-gradient-to-r from-dmaroon to-maroon" {{disabled}}>
+            <button 
+                id="submitVotesBtn" 
+                type="submit" 
+                onclick="confirmSubmit()" 
+                class="w-32 px-10 py-2 my-2 font-medium text-white rounded-full bg-maroon hover:bg-gradient-to-r from-dmaroon to-maroon">
                 Submit Votes
             </button>
+        {% endif %}
         </div>
 
         <!-- Modal Structure -->
@@ -127,35 +183,62 @@
         
         const selectedCandidates = {}; // Track selected candidates by position
             
-        function selectCandidate(position, candidateName,candidate_id, button) {
+        function selectCandidate(position,max_selection, candidateName,candidate_id, button) {
             // Get the parent container (the div holding the candidate's details)
             const container = button.closest('.border-maroon');
-
-            // If there's a previously selected candidate for this position, deselect it
+           
             if (selectedCandidates[position]) {
-                const previousButton = selectedCandidates[position].button;
-                const previousContainer = selectedCandidates[position].container;
+               
+                if(selectedCandidates[position].candidate_id.includes(candidate_id)){
+                    index=selectedCandidates[position].candidate_id.indexOf(candidate_id);
 
-                if (previousButton !== button) {
-                    // Reset the previous button and container
-                    previousButton.classList.remove('bg-dmaroon');
-                    previousButton.classList.add('bg-maroon');
-                    previousButton.innerHTML = '<span class="text-base font-medium">Vote</span>';
+                    selectedCandidates[position].candidate_id.splice(index,1);
+                    selectedCandidates[position].button.splice(index,1);
+                    selectedCandidates[position].container.splice(index,1);
+                    selectedCandidates[position].name.splice(index,1);
+                    selectedCandidates[position].count--;
+                  
+
+                    button.classList.remove('bg-dmaroon');
+                    button.classList.add('bg-maroon');
+                    button.classList.add('active:bg-dmaroon');
+                    button.innerText = 'Vote';
                     
-                    // Reset the previous container's border color and size
-                    previousContainer.style.borderColor = 'maroon'; // Reset to original border color
-                    previousContainer.style.borderWidth = '2px'; // Reset to original border size
+                   
+                    container.style.borderColor = 'maroon'; 
+                    container.style.borderWidth = '2px'; 
+                    resetChanges(); 
+                    return;
                 }
-            }
+              
+                if(selectedCandidates[position].count < max_selection){
+              
 
-            // Select the current candidate
-            selectedCandidates[position] = { 
-                name: candidateName, 
-                button: button,
-                container: container,
-                candidate_id: candidate_id
-            };
-
+                   
+                    selectedCandidates[position].name.push(candidateName);
+                    
+                    selectedCandidates[position].button.push(button);
+                    selectedCandidates[position].container.push(container);
+                    selectedCandidates[position].candidate_id.push(candidate_id);
+                    selectedCandidates[position].count++; 
+                }else {
+                    return;
+                }    
+              
+            } else if(!selectedCandidates[position] ) {
+                alert('first')
+             selectedCandidates[position] = { 
+                name: [candidateName], 
+                button: [button],
+                container: [container],
+                candidate_id: [candidate_id],
+                count: 1
+                };
+              
+            } else{
+                return;
+            }      
+         
             // Change the button style
             button.classList.add('bg-dmaroon');
             button.classList.remove('bg-maroon');
@@ -165,22 +248,28 @@
             container.style.borderColor = '#A41C30'; // Set border color to dmaroon
             container.style.borderWidth = '5px'; // Set border size to 8px
         }
-
         function resetChanges() {
-            Object.values(selectedCandidates).forEach(({ button, container }) => {
-                // Reset button styles
-                button.classList.remove('bg-dmaroon');
-                button.classList.add('bg-maroon');
-                button.classList.add('active:bg-dmaroon');
-                button.innerText = 'Vote';
-                
-                // Reset container's border color and size
-                container.style.borderColor = 'maroon';  // Reset to original border color
-                container.style.borderWidth = '2px';  // Reset to original border width
+            // Loop through all positions in selectedCandidates
+            Object.values(selectedCandidates).forEach(({ button, container, candidate_id, name }) => {
+                // Loop through the arrays of button and container
+                for (let i = 0; i < button.length; i++) {
+                    // Reset button styles
+                    button[i].classList.remove('bg-dmaroon');
+                    button[i].classList.add('bg-maroon');
+                    button[i].classList.add('active:bg-dmaroon');
+                    button[i].innerText = 'Vote';
+                    
+                    // Reset container's border color and width
+                    container[i].style.borderColor = 'maroon';
+                    container[i].style.borderWidth = '2px';
+                }
             });
-
-            // Clear the selected candidates object
-            selectedCandidates = {};  // No selected candidates anymore
+            
+            for (let key in selectedCandidates) {
+                if (selectedCandidates.hasOwnProperty(key)) {
+                    delete selectedCandidates[key];
+                }
+            }
         }
         // Function to open the modal and set candidate details
         function openModal(name, year, course, positionTitle, imageUrl, platform) {
@@ -249,6 +338,7 @@
             .then(data => {
                 if (data.success) {
                     alert('Your votes have been successfully submitted!');
+                    window.location.href = '';
                     // Optionally, redirect the user or clear the form
                     // window.location.href = '/thank-you'; // Example redirection
                 } else {
@@ -267,6 +357,24 @@
             }
         });
 
-        
+        document.addEventListener('DOMContentLoaded', () => {
+            toggleButtonState(); // Call function after DOM content is loaded
+        });
+
+        function toggleButtonState() {
+            const button = document.getElementById('submitVotesBtn');
+            if (button.hasAttribute('disabled')) {
+                // Change color to gray and remove hover effect
+                button.classList.remove('hover:bg-gradient-to-r', 'from-dmaroon', 'to-maroon');
+                button.style.backgroundColor = 'gray';
+                button.style.cursor = 'not-allowed'; // Optional: show disabled cursor
+            } else {
+                // Restore original color and hover effect
+                button.classList.add('hover:bg-gradient-to-r', 'from-dmaroon', 'to-maroon');
+                button.style.backgroundColor = ''; // Use default Tailwind CSS styles
+                button.style.cursor = ''; // Restore default cursor
+            }
+        }
+
     </script>
     {% endblock %}
