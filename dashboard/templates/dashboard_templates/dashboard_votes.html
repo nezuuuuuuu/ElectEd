@@ -30,7 +30,7 @@
                 {% for election in elections %}
                     {% if elections.exists %}
                         <a href="{% url 'votes_candidates' election.id %}">
-                            <div class="flex flex-col justify-center h-full overflow-hidden text-center border-4 items-left border-maroon rounded-xl text-maroon w-60">
+                            <div class="flex flex-col justify-center h-full overflow-hidden text-center border-4 items-left border-maroon rounded-xl text-maroon w-60 transition-shadow transition-transform transform hover:scale-105">
                                 <!-- CONTAINER -->
                                 {% if election.image %}
                                 <div class="relative w-full h-40 overflow-hidden">

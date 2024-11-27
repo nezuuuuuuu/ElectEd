@@ -40,7 +40,18 @@
 
                     {% if candidate.position == position and candidate.election == election %}
 
-                        <div class="flex flex-col items-center justify-center h-full px-10 py-5 overflow-hidden text-center transition-shadow transition-transform transform border-2 hover:scale-105 hover:shadow-2xl border-maroon rounded-xl text-maroon w-60">
+                        <div onclick="openModal(
+                            '{{ candidate.name }}', 
+                            '{{ candidate.year }}', 
+                            '{{ candidate.course }}', 
+                            '{{ position.title }}', 
+                            '{% if candidate.image %}{{ candidate.image.url }}{% else %}{% static 'landingpics/guwang.png' %}{% endif %}', 
+                            '{{ candidate.platforms|escapejs }}')"
+                            class="cursor-pointer flex flex-col items-center justify-center h-full px-10 py-5 overflow-hidden text-center transition-shadow transition-transform transform border-2 hover:scale-105 hover:shadow-2xl border-maroon rounded-xl text-maroon w-60 
+                                    {% if candidate.id|stringformat:"s" in voted_ids %}
+                                        bg-maroon/30
+                                        scale-105
+                                    {% endif %}">
                             <div class="w-40 h-40 mb-2 overflow-hidden border-4 rounded-full border-maroon py10">
                                 {% if candidate.image %}
                                     <img src="{{ candidate.image.url }}" class="object-cover h-full rounded-full" alt="{{ candidate.name }}">
@@ -59,7 +70,7 @@
                                     {% with already_matched=False %}
                                         {% for id in voted_ids %}
                                       
-                                                {% if not already_matched and candidate.id|stringformat:"s" == id %}
+                                                <!-- {% if not already_matched and candidate.id|stringformat:"s" == id %}
                                                     <button 
                                                         class="vote-button  px-12 py-2 mb-2 font-medium rounded-full bg-dmaroon text-white2 w-36" disabled>
                                                         <span class="text-2xl font-bold">✔</span>        
@@ -67,11 +78,11 @@
                                                     {% with True as already_matched %}
                                                
                                                     {% endwith %}
-                                                {% endif %}
+                                                {% endif %} -->
 
                                                
 
-                                                {% if forloop.last and already_matched %}
+                                                <!-- {% if forloop.last and already_matched %}
                                                 <button 
                                                 onclick="selectCandidate('{{position.title }}','{{position.max_selection}}', '{{ candidate.name }}','{{candidate.id}}', this)" 
                                                 class="vote-button hover:bg-maroon2 active:bg-dmaroon focus:bg-dmaroon px-12 py-2 mb-2 font-medium rounded-full bg-maroon text-white2 w-36">
@@ -79,14 +90,14 @@
                                                 Vote
                                                 </button>
                                                 
-                                                {% endif %}
-                                        {% endfor %}
-                                        {% endwith %}
+                                                {% endif %} -->
+                                        <!-- {% endfor %}
+                                        {% endwith %} -->
                                     
 
                                     {% else %}
                                     <button 
-                                    onclick="selectCandidate('{{position.title }}','{{position.max_selection}}', '{{ candidate.name }}','{{candidate.id}}', this)" 
+                                    onclick="selectCandidate('{{position.title }}','{{position.max_selection}}', '{{ candidate.name }}','{{candidate.id}}', this);event.stopPropagation()" 
                              class="vote-button hover:bg-maroon2 active:bg-dmaroon focus:bg-dmaroon px-12 py-2 mb-2 font-medium rounded-full bg-maroon text-white2 w-36">
 
                              Vote
@@ -102,8 +113,8 @@
                                     '{{ candidate.course }}', 
                                     '{{ position.title }}', 
                                     '{% if candidate.image %}{{ candidate.image.url }}{% else %}{% static 'landingpics/guwang.png' %}{% endif %}', 
-                                    '{{ candidate.platforms|escapejs }}')" 
-                                    class="w-32 px-4 py-2 mb-2 font-medium transition-transform border-2 rounded-full hover:bg-maroon hover:text-white2 border-maroon text-maroon">
+                                    '{{ candidate.platforms|escapejs }}'); 
+                                    "class="w-32 px-4 py-2 mb-2 font-medium transition-transform border-2 rounded-full hover:bg-maroon hover:text-white2 border-maroon text-maroon">
                                     View&nbsp;Details
                                 </button>
                             </div>
@@ -113,6 +124,7 @@
             </div>
         </div>
         {% endfor %}
+        
         
 
         <!-- Submit Button -->
@@ -301,6 +313,8 @@
 
         // Function for submit confirmation
         // Function for submit confirmation
+
+        
         
         function confirmSubmit() {
             // Prepare the data to send to the server
@@ -375,6 +389,7 @@
                 button.style.cursor = ''; // Restore default cursor
             }
         }
+        
 
     </script>
     {% endblock %}
