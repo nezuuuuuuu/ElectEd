@@ -129,32 +129,36 @@
 
         <!-- Submit Button -->
         <div class="flex justify-between mt-8 mb-10 mx-28">
-            
-            {% if disabled == 'disabled' %}
-            <button onclick="resetChanges()" class="w-32 px-4 py-2 my-2 font-medium border-0 rounded-full opacity-0" disabled>
-            
-            </button>
+          
 
+
+        {% if disabled == 'disabled' %}
+        <button onclick="resetChanges()" class="w-32 px-4 py-2 my-2 font-medium border-0 rounded-full opacity-0" disabled>
+        </button>
+        <div class="flex items-center justify-between gap-10 ">
+           
+            <p class='text-2xl font-bold text-center bg-transparent' id='demo'></p>
             <button 
-                id="submitVotesBtn" 
-                type="submit" 
-                onclick="confirmSubmit()" 
-                class="w-32 px-10 py-2 my-2 font-medium text-gray-400 rounded-full bg-disablecolor cursor-not-allowed" 
-                disabled>
-                Submit Votes
-            </button>
-        {% else %}
-            <button onclick="resetChanges()" class="w-32 px-4 py-2 my-2 font-medium border-2 rounded-full hover:bg-maroon hover:text-white2 border-maroon text-maroon">
-                Reset Changes
-            </button>
-            <button 
-                id="submitVotesBtn" 
-                type="submit" 
-                onclick="confirmSubmit()" 
-                class="w-32 px-10 py-2 my-2 font-medium text-white rounded-full bg-maroon hover:bg-gradient-to-r from-dmaroon to-maroon">
-                Submit Votes
-            </button>
-        {% endif %}
+            id="checkResultsBtn" 
+            type="submit" 
+            onclick="checkResults()" 
+            class="w-32 px-10 py-2 my-2 font-medium text-white rounded-full bg-disablecolor cursor-not-allowed " disabled>
+            Check Results
+        </button>
+        <div>
+   
+    {% else %}
+        <button onclick="resetChanges()" class="w-32 px-4 py-2 my-2 font-medium border-2 rounded-full hover:bg-maroon hover:text-white2 border-maroon text-maroon">
+            Reset Changes
+        </button>
+        <button 
+            id="submitVotesBtn" 
+            type="submit" 
+            onclick="confirmSubmit()" 
+            class="w-32 px-10 py-2 my-2 font-medium text-white rounded-full bg-maroon hover:bg-gradient-to-r from-dmaroon to-maroon">
+            Submit Votes
+        </button>
+    {% endif %}
         </div>
 
         <!-- Modal Structure -->
@@ -215,11 +219,23 @@
                     button.classList.add('bg-maroon');
                     button.classList.add('active:bg-dmaroon');
                     button.innerText = 'Vote';
-                    
+                  
                    
                     container.style.borderColor = 'maroon'; 
                     container.style.borderWidth = '2px'; 
-                    resetChanges(); 
+                    alert(selectedCandidates[position].count)
+                    if (selectedCandidates[position].count == 0) {
+                        alert(position)
+                         delete selectedCandidates[position];
+                      
+                        // Check if the selectedCandidates array is empty after removal
+                        if (Object.keys(selectedCandidates).length == 0) {
+                            resetChanges();  // Call the function to reset changes
+                            alert('reset');  // Optional: alert for confirmation
+                        }
+                    }
+                 
+                   
                     return;
                 }
               
@@ -303,9 +319,7 @@
         }
 
         //styling
-        document.getElementById('voteButton').addEventListener('click', function() {
-            this.innerHTML = '<img src="landingpics/checkmark.png" alt="Check" class="w-6 h-6">'; // Replaces "Vote" with check image
-        });
+      
 
         // document.getElementById("candidateModal").addEventListener("click", (event) => {
         //     event.stopPropagation(); // Prevent modal close from affecting other elements
@@ -389,6 +403,54 @@
                 button.style.cursor = ''; // Restore default cursor
             }
         }
+
+
+if('{{disabled}}'=='disabled'){
+ var countDownDate = new Date("{{ election.close_date|date:'M d, Y H:i:s' }}").getTime();
+ alert(countDownDate)
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+  // Get today's date and time
+  var now = new Date().getTime();
+
+  // Find the distance between now and the count down date
+  var distance = countDownDate - now;
+
+  // Time calculations for days, hours, minutes and seconds
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  // Display the result in the element with id="demo"
+  document.getElementById("demo").innerHTML = days + " : " + hours + " : "
+  + minutes + " : " + seconds ;
+
+  // If the count down is finished, write some text
+  if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("demo").innerHTML=''
+    toggleCheckResultBtn();
+  }
+}, 1000);
+}
+
+           
+function toggleCheckResultBtn(){
+    var button = document.getElementById("checkResultsBtn");
+
+    // If button is disabled, enable it and update the classes
+    if (button.disabled) {
+        button.disabled = false; // Enable button
+        button.classList.remove("bg-disablecolor", "cursor-not-allowed"); // Remove disabled styles
+        button.classList.add("bg-maroon", "hover:bg-gradient-to-r", "from-dmaroon", "to-maroon"); // Add enabled styles
+    } else {
+        button.disabled = true; // Disable button
+        button.classList.remove("bg-maroon", "hover:bg-gradient-to-r", "from-dmaroon", "to-maroon"); // Remove enabled styles
+        button.classList.add("bg-disablecolor", "cursor-not-allowed"); // Add disabled styles
+    }
+};
         
 
     </script>

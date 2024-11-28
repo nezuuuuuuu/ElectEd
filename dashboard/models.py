@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from multiselectfield import MultiSelectField
+from datetime import date, timedelta
 
 
 # Active elections
@@ -33,6 +34,9 @@ class Election(models.Model):
     image = models.ImageField(upload_to='elections/', null=True, blank=True)
     description = models.TextField(blank=True)
     departments = MultiSelectField(choices=DEPARTMENT_CHOICES, default=['ALL'])  
+    open_date = models.DateTimeField(default=date.today) 
+    close_date = models.DateTimeField(default=date.today) 
+   
 
     def __str__(self):
         return f"{self.title} - Departments: {', '.join(self.departments or [])}"
