@@ -28,10 +28,15 @@
 
     {% block body %}
     <section class='flex flex-col justify-center max-w-5xl py-12 mx-auto xl:py-0'>
-       
+       {%if disabled == 'disabled' %}
+        <h1 class='pt-2 pl-6 mb-4 text-4xl font-bold text-maroon px-28'>
+            Your vote is recorded.<span class="text-dmaroon">Thank you for participating!</span>!
+        </h1>
+        {% else %}
         <h1 class='pt-2 pl-6 mb-4 text-4xl font-bold text-maroon px-28'>
             CAST YOUR VOTES NOW for <span class="text-dmaroon">{{ election.title }}</span>!
         </h1>
+        {% endif %}
         {% for position in positions %}
         <div class='flex flex-col items-center justify-center gap-3 pt-10 text-center'>
             <h1 class='pt-2 pl-6 mb-4 text-2xl font-bold text-dark-maroon px-28'>{{ position.title }}</h1>
@@ -223,15 +228,14 @@
                    
                     container.style.borderColor = 'maroon'; 
                     container.style.borderWidth = '2px'; 
-                    alert(selectedCandidates[position].count)
                     if (selectedCandidates[position].count == 0) {
-                        alert(position)
+                        //alert(position)
                          delete selectedCandidates[position];
                       
                         // Check if the selectedCandidates array is empty after removal
                         if (Object.keys(selectedCandidates).length == 0) {
                             resetChanges();  // Call the function to reset changes
-                            alert('reset');  // Optional: alert for confirmation
+                            //alert('reset');  // Optional: //alert for confirmation
                         }
                     }
                  
@@ -254,7 +258,7 @@
                 }    
               
             } else if(!selectedCandidates[position] ) {
-                alert('first')
+                //alert('first')
              selectedCandidates[position] = { 
                 name: [candidateName], 
                 button: [button],
@@ -345,9 +349,9 @@
                 }
             }
 
-            // If no votes have been selected, display an alert
+            // If no votes have been selected, display an //alert
             if (votes.length === 0) {
-                alert('Please select candidates to submit your votes.');
+                //alert('Please select candidates to submit your votes.');
                 return;
             }
 
@@ -365,17 +369,17 @@
             .then(response => response.json())  // Parse the JSON response from the server
             .then(data => {
                 if (data.success) {
-                    alert('Your votes have been successfully submitted!');
+                    //alert('Your votes have been successfully submitted!');
                     window.location.href = '';
                     // Optionally, redirect the user or clear the form
                     // window.location.href = '/thank-you'; // Example redirection
                 } else {
-                    alert('There was an issue submitting your votes. Please try again.');
+                    //alert('There was an issue submitting your votes. Please try again.');
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('An error occurred while submitting your votes.');
+                //alert('An error occurred while submitting your votes.');
             });
         }
 
@@ -407,7 +411,7 @@
 
 if('{{disabled}}'=='disabled'){
  var countDownDate = new Date("{{ election.close_date|date:'M d, Y H:i:s' }}").getTime();
- alert(countDownDate)
+ //alert(countDownDate)
 // Update the count down every 1 second
 var x = setInterval(function() {
 
@@ -430,7 +434,7 @@ var x = setInterval(function() {
   // If the count down is finished, write some text
   if (distance < 0) {
     clearInterval(x);
-    document.getElementById("demo").innerHTML=''
+    document.getElementById("demo").innerHTML='Results are out'
     toggleCheckResultBtn();
   }
 }, 1000);

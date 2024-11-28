@@ -28,7 +28,7 @@ def get_user_info(request):
     Logged_id = str(id).replace('-', '').replace('{', '').replace('}', '').replace("'", '').replace('"', '').strip()
     # if(verif !=1):
     #     return
-    print(Logged_id)
+    # print(Logged_id)
   
     initials=user.username.split('.')[0][0].upper()  + user.username.split('.')[1].split('@')[0][0].upper() 
     print(initials)
@@ -53,7 +53,7 @@ def main(request):
     user_info=get_user_info(request)
     global Logged_id
 
-    admins(request)
+    # admins(request) just to register email as admin
     return render(request, 'dashboard_templates/dashboard_main.html', {
         **get_user_info(request)  # Assuming this returns a dictionary
     })
@@ -112,7 +112,7 @@ def votes_candidates(request, election_id):
 
         voted_candidate_ids = voted_candidate_ids.split(',') 
         
-        print(f'{voted_candidate_ids} idsssss')
+        # print(f'{voted_candidate_ids} idsssss')
         isDisabled= 'disabled'
             
     except Exception as e:
@@ -203,7 +203,7 @@ def submit_votes(request):
                 candidate.vote_count += 1
                 candidate.save()
        
-        print(candidate.election)
+        # print(candidate.election)
         student = getStudentLoggedIn(request=request) 
         voteslip = VoteSlip(student=student, election=election,candidates=ids)
            
@@ -251,13 +251,13 @@ def create_profile_image(initials, output_path, size=256, text_color="white"):
     draw.text((text_x, text_y), initials, fill=text_color, font=font)
 
     img.save(f'static/initials/{output_path}')
-    print( output_path)
+    # print( output_path)
 
 
 def getStudentLoggedIn(request):
     global Logged_id
     get_user_info(request=request)
-    print(Logged_id)
+    # print(Logged_id)
    
     student = Student.objects.get(student_id=Logged_id)  
     return student
