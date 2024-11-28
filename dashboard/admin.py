@@ -23,7 +23,7 @@ class PositionAdmin(admin.ModelAdmin):
 
 class CandidateAdmin(admin.ModelAdmin):
     form = CandidateAdminForm
-    list_display = ['display_image_with_name', 'year', 'position', 'election', 'vote_count']
+    list_display = ['display_image_with_name','partylist', 'year', 'position', 'election', 'vote_count']
     search_fields = ('name',)
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):

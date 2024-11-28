@@ -3,6 +3,7 @@ from django.core.exceptions import ValidationError
 from multiselectfield import MultiSelectField
 from datetime import date, timedelta
 
+from datetime import datetime
 
 # Active elections
 class Election(models.Model):
@@ -34,8 +35,8 @@ class Election(models.Model):
     image = models.ImageField(upload_to='elections/', null=True, blank=True)
     description = models.TextField(blank=True)
     departments = MultiSelectField(choices=DEPARTMENT_CHOICES, default=['ALL'])  
-    open_date = models.DateTimeField(default=date.today) 
-    close_date = models.DateTimeField(default=date.today) 
+    open_date = models.DateTimeField(default=datetime.now)  # Correct default value
+    close_date = models.DateTimeField(default=datetime.now) 
    
 
     def __str__(self):
@@ -95,19 +96,18 @@ class Candidate(models.Model):
     ]
 
     name = models.CharField(max_length=100)
+    partylist = models.CharField(max_length=100,default='')
     year = models.CharField(max_length=20, choices=YEAR_CHOICES, default="1st Year")
     course = models.CharField(max_length=100, blank=True, null=True)
     image = models.ImageField(upload_to='candidates/', blank=True, null=True)
     election = models.ForeignKey(Election, on_delete=models.CASCADE, related_name='candidates')
     position = models.ForeignKey(Position, on_delete=models.CASCADE, related_name='candidates')
-    # student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='candidates')
 
     vote_count = models.IntegerField(default=0) 
     platforms = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return self.name
-
 
 from django.core.exceptions import ValidationError
 
