@@ -51,7 +51,9 @@
                             '{{ candidate.course }}', 
                             '{{ position.title }}', 
                             '{% if candidate.image %}{{ candidate.image.url }}{% else %}{% static 'landingpics/guwang.png' %}{% endif %}', 
-                            '{{ candidate.platforms|escapejs }}')"
+                            '{{ candidate.platforms|escapejs }}',
+                            '{{candidate.partylist}}'
+                            )"
                             class="cursor-pointer flex flex-col items-center justify-center h-full px-10 py-5 overflow-hidden text-center transition-shadow transition-transform transform border-2 hover:scale-105 hover:shadow-2xl border-maroon rounded-xl text-maroon w-60 
                                     {% if candidate.id|stringformat:"s" in voted_ids %}
                                         bg-maroon/30
@@ -181,14 +183,18 @@
                         <h2 id="modalName" class="mb-2 text-2xl font-bold text-dmaroon"></h2>
                         <p class="text-1xl text-maroon">for <span id="modalPosition" class="font-bold text-maroon"></span></p>
                         <div class="flex items-center">
-                            <img src="{% static 'landingpics/graduation cap.png' %}" alt="" class="mr-2"> 
+                            <img src="{% static 'landingpics/graduation cap2.png' %}" alt="" class="mr-2 h-auto w-6"> 
                             <p id="modalCourse" class="font-medium text-1xl text-maroon"></p>
-                    </div>   
+                        </div>   
                     <div class="flex items-center">
-                            <img src="{% static 'landingpics/age.png' %}" alt="" class="mr-4"> 
+                            <img src="{% static 'landingpics/age2.png' %}" alt="" class="mr-2 h-auto w-6"> 
                             <p id="modalYear" class="font-medium text-1xl text-maroon"></p>
                     </div>
-                    </div>
+                    <div class="flex items-center">
+                        <img src="{% static 'landingpics/partylist.png' %}" alt="" class="mr-2 h-auto w-6"> 
+                        <p id="modalPartyList" class="font-medium text-1xl text-maroon"></p>
+                    </div>  
+                    </div>  
                 </div>
 
                 <div class="flex-col items-center justify-center mx-20 my-20">
@@ -304,7 +310,7 @@
             }
         }
         // Function to open the modal and set candidate details
-        function openModal(name, year, course, positionTitle, imageUrl, platform) {
+        function openModal(name, year, course, positionTitle, imageUrl, platform,partylist) {
             console.log(platform);
             document.getElementById("modalName").innerText = name;
             document.getElementById("modalYear").innerText = year;
@@ -312,6 +318,8 @@
             document.getElementById("modalCourse").innerText = course; 
             document.getElementById("modalPosition").innerText = positionTitle;
             document.getElementById("modalPlatform").innerText = platform || "No platform information available"; 
+            document.getElementById("modalPartyList").innerText = partylist
+
             document.getElementById("candidateModal").classList.remove("hidden");
             document.body.classList.add("no-scroll");
         }
@@ -428,8 +436,8 @@ var x = setInterval(function() {
   var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
   // Display the result in the element with id="demo"
-  document.getElementById("demo").innerHTML = days + " : " + hours + " : "
-  + minutes + " : " + seconds ;
+  document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+  + minutes + "m " + seconds + "s ";
 
   // If the count down is finished, write some text
   if (distance < 0) {
@@ -458,4 +466,8 @@ function toggleCheckResultBtn(){
         
 
     </script>
+
+
+
+    
     {% endblock %}

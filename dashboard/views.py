@@ -11,7 +11,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 import json 
 import logging
-
+from datetime import datetime
+from django.utils.timezone import now
 logger = logging.getLogger(__name__)
 
 
@@ -62,10 +63,18 @@ def votes(request):
 
     user_info = get_user_info(request)
     global Logged_id
+    current_time =now()
+    is_future_ctr=0
 
     student = get_object_or_404(Student, student_id=Logged_id)
     try:
         elections = Election.objects.filter(departments__contains=student.department)
+        for election in elections:
+            election.is_future =election.open_date > current_time  # Add logic here
+            if(election.is_future):
+                is_future_ctr+=1
+   
+     
     except Exception as e:
         elections=''
     # Search functionality
@@ -74,10 +83,13 @@ def votes(request):
         elections = elections.filter(
             Q(title__icontains=query) | 
             Q(description__icontains=query)
+            
         )
 
     context = {
         'elections': elections,
+        'is_future_ctr':is_future_ctr
+        
     }
     context.update(user_info)
     return render(request, 'dashboard_templates/dashboard_votes.html', context)
@@ -94,8 +106,17 @@ def votes_candidates(request, election_id):
     # Filter candidates based on the current election and search query
     if search_query:
         candidates = Candidate.objects.filter(
-            election=election,
-            name__icontains=search_query
+            
+
+             Q(name__icontains=search_query) | 
+            Q( year__icontains=search_query)|
+            Q( course__icontains=search_query)| 
+            Q( partylist__icontains=search_query),
+            election=election
+          
+            
+           
+            
         )
     else:
         candidates = Candidate.objects.filter(election=election)
