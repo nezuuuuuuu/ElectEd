@@ -1,6 +1,11 @@
-<img src="https://github.com/nezuuuuuuu/ElectEd/blob/Frontend-Dashboard-VotePage-CandidatePage-Nov27-nico/static/landingpics/adminlogo.svg" alt="ElectEd Logo" width="250" height="auto" />
+<p align="center">
+  <img src="https://github.com/nezuuuuuuu/ElectEd/blob/Frontend-Dashboard-VotePage-CandidatePage-Nov27-nico/static/landingpics/electedlogo_github2.png" alt="ElectEd Logo" width="700" height="auto" />
+</p>
 
-Welcome to **ElectEd**, the *Online Voting System* designed to revolutionize university elections. With a focus on **simplicity**, **security**, and **scalability**, ElectEd ensures a seamless voting experience for students and administrators alike.
+<p align="center">
+  Welcome to <strong>ElectEd</strong>, the <em>Online Voting System</em> designed to revolutionize university elections. 
+  With a focus on <strong>simplicity</strong>, <strong>security</strong>, and <strong>scalability</strong>, ElectEd ensures a seamless voting experience for students and administrators alike.
+</p>
 
 ---
 
