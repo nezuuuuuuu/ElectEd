@@ -131,11 +131,13 @@
     
                 const interval = setInterval(() => {
                     const now = new Date().getTime();
+                  
                     const distance = countDownDate - now;
     
                     if (distance < 0) {
                         clearInterval(interval);
-                        document.getElementById(timerId).innerHTML = "Election is open!";
+                        document.getElementById(timerId).remove(); // Remove the timer element
+                        location.reload(); // Reload the page
                     } else {
                         const days = Math.floor(distance / (1000 * 60 * 60 * 24));
                         const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));

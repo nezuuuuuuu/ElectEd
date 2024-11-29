@@ -15,6 +15,9 @@ from datetime import datetime
 from django.utils.timezone import now
 logger = logging.getLogger(__name__)
 
+from datetime import timedelta
+
+
 
 
 Logged_id=None
@@ -64,15 +67,23 @@ def votes(request):
     user_info = get_user_info(request)
     global Logged_id
     current_time =now()
+    # current_time=current_time + timedelta(hours=8) 
     is_future_ctr=0
 
     student = get_object_or_404(Student, student_id=Logged_id)
     try:
         elections = Election.objects.filter(departments__contains=student.department)
         for election in elections:
-            election.is_future =election.open_date > current_time  # Add logic here
+            election.is_future =election.open_date > current_time 
+            print(f'open {election.title} {election.open_date}')
+            print(f'curr {current_time}')
+
+
+             # Add logic here
+            print(  election.is_future)
             if(election.is_future):
                 is_future_ctr+=1
+               
    
      
     except Exception as e:
