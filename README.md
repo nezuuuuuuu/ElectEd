@@ -60,33 +60,33 @@ Welcome to **ElectEd**, the online voting platform designed to revolutionize uni
 
 ### Backend
 <a href="https://www.python.org" target="_blank" rel="noreferrer">
-    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" alt="Python" width="40" height="40"/>
+    <img src="https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54" alt="Python" width="140" height="40"/>
 </a>
 
 ### Database Management System (DBMS)
 <a href="https://www.mysql.com/" target="_blank" rel="noreferrer">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/SQLite370.svg/512px-SQLite370.svg.png" alt="MySQL" width="40" height="40"/>
+    <img src="https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white" alt="SQLite" width="140" height="40"/>
 </a>
 
 ### Framework
 <a href="https://www.djangoproject.com/" target="_blank" rel="noreferrer">
-    <img src="https://cdn.worldvectorlogo.com/logos/django.svg" alt="Django" width="40" height="40"/>
+    <img src="https://img.shields.io/badge/django-%23092E20.svg?style=for-the-badge&logo=django&logoColor=white" alt="Django" width="140" height="40"/>
 </a>
 
 ### Frontend
 <a href="https://www.w3.org/html/" target="_blank" rel="noreferrer">
-    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg" alt="HTML5" width="40" height="40"/>
+    <img src="https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white" alt="HTML5" width="140" height="40"/>
 </a>
 <a href="https://tailwindcss.com/" target="_blank" rel="noreferrer">
-    <img src="https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg" alt="Tailwind CSS" width="40" height="40"/>
+    <img src="https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS" width="170" height="40"/>
 </a>
 <a href="https://www.w3schools.com/css/" target="_blank" rel="noreferrer">
-    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg" alt="CSS3" width="40" height="40"/>
+    <img src="https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white" alt="CSS3" width="140" height="40"/>
 </a>
 
 ### UI/UX Design
 <a href="https://www.figma.com/" target="_blank" rel="noreferrer">
-    <img src="https://www.vectorlogo.zone/logos/figma/figma-icon.svg" alt="Figma" width="40" height="40"/>
+    <img src="https://img.shields.io/badge/figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white" alt="Figma" width="140" height="40"/>
 </a>
 
 ---
@@ -101,9 +101,14 @@ Welcome to **ElectEd**, the online voting platform designed to revolutionize uni
 
 ## Project Members
 
-- **Abadiano, Jan Edward**
-- **Carreon, John Loi**
-- **Econar, John Mark**
+| Profile | Name | GitHub Profile |
+|---------|------|-----------------|
+| <img src="https://github.com/nezuuuuuuu/ElectEd/blob/Frontend-Dashboard-VotePage-CandidatePage-Nov27-nico/static/landingpics/jm.png" alt="Profile 1" width="120" height="120"> | <strong>John Mark A. Econar</strong>| [<img src="https://avatars.githubusercontent.com/u/90693343?v=4" height="120">](https://github.com/jeecoo) |
+| <img src="https://github.com/nezuuuuuuu/ElectEd/blob/Frontend-Dashboard-VotePage-CandidatePage-Nov27-nico/static/landingpics/jl.png" alt="Profile 2" width="120" height="120"> | <strong><center>John Loi D. Carreon</center></strong> | [<img src="https://avatars.githubusercontent.com/u/110650917?v=4" height="120">](https://github.com/dzanloi) |
+| <img src="https://github.com/nezuuuuuuu/ElectEd/blob/Frontend-Dashboard-VotePage-CandidatePage-Nov27-nico/static/landingpics/nico.png" alt="Profile 3" width="120" height="120"> | <strong><center>Jan Edward A. Abadiano</center></strong> | [<img src="https://avatars.githubusercontent.com/u/146615433?v=4" height="120">](https://github.com/nezuuuuuuu) |
+
+
+
   
 ---
 ## 🚀 **Transforming Elections, One Vote at a Time**
