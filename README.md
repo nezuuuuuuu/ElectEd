@@ -74,7 +74,7 @@ Welcome to **ElectEd**, the online voting platform designed to revolutionize uni
 </a>
 
 ### Frontend
-<a href="https://www.w3.org/html/" target="_blank" rel="noreferrer">
+<a href="https://www.w3schools.com/html/" target="_blank" rel="noreferrer">
     <img src="https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white" alt="HTML5" width="140" height="40"/>
 </a>
 <a href="https://www.w3schools.com/js/" target="_blank" rel="noreferrer">
