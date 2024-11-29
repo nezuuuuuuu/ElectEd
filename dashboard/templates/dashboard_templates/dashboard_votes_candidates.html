@@ -140,7 +140,7 @@
 
 
         {% if disabled == 'disabled' %}
-        <button onclick="resetChanges()" class="w-32 px-4 py-2 my-2 font-medium border-0 rounded-full opacity-0" disabled>
+        <button onclick="resetChanges()" class="w-60 px-2 py-2 my-2 font-medium border-0 rounded-full opacity-0" disabled>
         </button>
         <div class="flex items-center justify-between gap-10 ">
            
@@ -148,21 +148,21 @@
             <button 
             id="checkResultsBtn" 
             type="submit" 
-            onclick="checkResults()" 
-            class="w-32 px-10 py-2 my-2 font-medium text-white rounded-full bg-disablecolor cursor-not-allowed " disabled>
+            onclick="window.location.href='{% url 'results' election.id %}'"     
+            class="w-52 px-10 py-3 my-2 font-medium text-white rounded-full bg-disablecolor cursor-not-allowed " disabled>
             Check Results
         </button>
         <div>
    
     {% else %}
-        <button onclick="resetChanges()" class="w-32 px-4 py-2 my-2 font-medium border-2 rounded-full hover:bg-maroon hover:text-white2 border-maroon text-maroon">
+        <button onclick="resetChanges()" class="w-52 px-4 py-3 my-2 font-medium border-2 rounded-full hover:bg-maroon hover:text-white2 border-maroon text-maroon">
             Reset Changes
         </button>
         <button 
             id="submitVotesBtn" 
             type="submit" 
             onclick="confirmSubmit()" 
-            class="w-32 px-10 py-2 my-2 font-medium text-white rounded-full bg-maroon hover:bg-gradient-to-r from-dmaroon to-maroon">
+            class="w-52 px-10 py-2 my-2 font-medium text-white rounded-full bg-maroon hover:bg-gradient-to-r from-dmaroon to-maroon">
             Submit Votes
         </button>
     {% endif %}

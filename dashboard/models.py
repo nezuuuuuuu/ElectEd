@@ -105,6 +105,7 @@ class Candidate(models.Model):
 
     vote_count = models.IntegerField(default=0) 
     platforms = models.TextField(blank=True, null=True)
+    is_winner = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
