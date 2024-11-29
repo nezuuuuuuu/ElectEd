@@ -64,7 +64,7 @@ Welcome to **ElectEd**, the online voting platform designed to revolutionize uni
 </a>
 
 ### Database Management System (DBMS)
-<a href="https://www.mysql.com/" target="_blank" rel="noreferrer">
+<a href="https://www.sqlite.org/" target="_blank" rel="noreferrer">
     <img src="https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white" alt="SQLite" width="140" height="40"/>
 </a>
 
