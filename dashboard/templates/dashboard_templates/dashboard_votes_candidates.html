@@ -30,7 +30,7 @@
     <section class='flex flex-col justify-center max-w-5xl py-12 mx-auto xl:py-0'>
        {%if disabled == 'disabled' %}
         <h1 class='pt-2 pl-6 mb-4 text-4xl font-bold text-maroon px-28'>
-            Your vote is recorded.<span class="text-dmaroon"> Thank you for participating!</span>!
+            Your vote is recorded.<span class="text-dmaroon"> Thank you for participating!</span>
         </h1>
         {% else %}
         <h1 class='pt-2 pl-6 mb-4 text-4xl font-bold text-maroon px-28'>
@@ -61,7 +61,7 @@
                                     {% endif %}">
                             <div class="w-40 h-40 mb-2 overflow-hidden border-4 rounded-full border-maroon py10">
                                 {% if candidate.image %}
-                                    <img src="{{ candidate.image.url }}" class="object-cover h-full rounded-full" alt="{{ candidate.name }}">
+                                    <img src="{{ candidate.image.url }}" class="object-cover w-full h-full rounded-full" alt="{{ candidate.name }}">
                                 {% else %}
                                     <img src="{% static 'landingpics/default.png' %}" class="object-cover h-full rounded-full" alt="No Image">
                                 {% endif %}
@@ -169,15 +169,15 @@
         </div>
 
         <!-- Modal Structure -->
-        <div id="candidateModal" class="fixed inset-0 flex items-center justify-center hidden bg-maroon/10">
-            <div class="bg-white ml-24 left-52 p-8 shadow-md rounded-lg w-[70%] flex-col items-start justify-start my-20 modal-content">
-                <button onclick="closeModal()" class="absolute mx-8 my-8 font-bold text-red-500 top-4 right-4">
-                    <img src="{% static 'landingpics/arrowleft.png' %}" class="object-cover h-full p-2 rounded-lg bg-maroon/40 hover:border-maroon" alt="No Image">
+        <div id="candidateModal" class="fixed inset-0 flex items-center justify-center hidden bg-maroon/10" onclick="closeModal(event)">
+            <div class="bg-white ml-24 left-52 p-8 shadow-md rounded-lg w-[70%] flex-col items-start justify-start my-20 modal-content" onclick="event.stopPropagation()">
+                <button onclick="closeModal()" class="absolute mx-8 my-8 font-bold top-4 right-4">
+                    <img src="{% static 'landingpics/arrowleft.png' %}" class="object-cover h-full p-3 rounded-lg border-maroon hover:bg-maroon/30" alt="No Image">
                 </button>
                 
                 <!-- image and info -->
                 <div class="flex items-center mx-20 my-20"> 
-                    <img id="modalImage" src="" alt="Candidate Image" class="object-cover w-2 mx-12 mb-4 border-4 rounded-full h-50 border-maroon">
+                    <img id="modalImage" src="" alt="Candidate Image" class="object-cover w-52 mx-12 mb-4 border-4 rounded-full h-52 border-maroon">
                     <div class="mx-10">
                         <p class="text-1xl text-maroon">Vote</p>
                         <h2 id="modalName" class="mb-2 text-2xl font-bold text-dmaroon"></h2>
@@ -325,9 +325,14 @@
         }
 
         // Function to close the modal
-        function closeModal() {
-            document.getElementById("candidateModal").classList.add("hidden");
-            document.body.classList.remove("no-scroll");
+        function closeModal(event) {
+            const modal = document.getElementById("candidateModal");
+
+            // If no event is provided or the click is outside the modal content, close the modal
+            if (!event || event.target === modal) {
+                modal.classList.add("hidden");
+                document.body.classList.remove("no-scroll");
+            }
         }
 
         //styling

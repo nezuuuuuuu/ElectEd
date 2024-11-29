@@ -1216,6 +1216,10 @@ select {
   height: 13rem;
 }
 
+.h-52 {
+  height: 13rem /* 208px */;
+}
+
 .h-60 {
   height: 16rem;
 }
@@ -1571,6 +1575,14 @@ select {
 .hover\:bg-maroon:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(164 28 48 / var(--tw-bg-opacity)) /* #a41c30 */;
+}
+
+.hover\:bg-maroon\/30:hover {
+  background-color: rgb(164 28 48 / 0.3);
+}
+
+.hover\:bg-maroon\/80:hover {
+  background-color: rgb(164 28 48 / 0.8);
 }
 
 .hover\:bg-itom\/35:hover {
