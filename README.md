@@ -104,11 +104,11 @@ Welcome to **ElectEd**, the online voting platform designed to revolutionize uni
 
 ## Project Members
 
-| Profile | Name | GitHub Profile |
-|---------|------|-----------------|
-| <img src="https://github.com/nezuuuuuuu/ElectEd/blob/Frontend-Dashboard-VotePage-CandidatePage-Nov27-nico/static/landingpics/jm.png" alt="Profile 1" width="120" height="120"> | <strong>John Mark A. Econar</strong>| [<img src="https://avatars.githubusercontent.com/u/90693343?v=4" height="120">](https://github.com/jeecoo) |
-| <img src="https://github.com/nezuuuuuuu/ElectEd/blob/Frontend-Dashboard-VotePage-CandidatePage-Nov27-nico/static/landingpics/jl.png" alt="Profile 2" width="120" height="120"> | <strong><center>John Loi D. Carreon</center></strong> | [<img src="https://avatars.githubusercontent.com/u/110650917?v=4" height="120">](https://github.com/dzanloi) |
-| <img src="https://github.com/nezuuuuuuu/ElectEd/blob/Frontend-Dashboard-VotePage-CandidatePage-Nov27-nico/static/landingpics/nico.png" alt="Profile 3" width="120" height="120"> | <strong><center>Jan Edward A. Abadiano</center></strong> | [<img src="https://avatars.githubusercontent.com/u/146615433?v=4" height="120">](https://github.com/nezuuuuuuu) |
+| Profile | Name |
+|---------|------|
+| [<img src="https://github.com/nezuuuuuuu/ElectEd/blob/Frontend-Dashboard-VotePage-CandidatePage-Nov27-nico/static/landingpics/jm.png" alt="Profile 1" width="120" height="120"> ](https://github.com/jeecoo) | <strong>John Mark A. Econar</strong>| 
+| [<img src="https://github.com/nezuuuuuuu/ElectEd/blob/Frontend-Dashboard-VotePage-CandidatePage-Nov27-nico/static/landingpics/jl.png" alt="Profile 2" width="120" height="120">](https://github.com/dzanloi) | <strong><center>John Loi D. Carreon</center></strong> | 
+| [<img src="https://github.com/nezuuuuuuu/ElectEd/blob/Frontend-Dashboard-VotePage-CandidatePage-Nov27-nico/static/landingpics/nico.png" alt="Profile 3" width="120" height="120">](https://github.com/nezuuuuuuu) | <strong><center>Jan Edward A. Abadiano</center></strong> | 
 
 
 
