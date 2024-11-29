@@ -77,6 +77,9 @@ Welcome to **ElectEd**, the online voting platform designed to revolutionize uni
 <a href="https://www.w3.org/html/" target="_blank" rel="noreferrer">
     <img src="https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white" alt="HTML5" width="140" height="40"/>
 </a>
+<a href="https://www.w3schools.com/js/" target="_blank" rel="noreferrer">
+    <img src="https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E" alt="javascript" width="140" height="40"/>
+</a>
 <a href="https://tailwindcss.com/" target="_blank" rel="noreferrer">
     <img src="https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS" width="170" height="40"/>
 </a>
