@@ -1,6 +1,6 @@
-# 🗳️ **ElectEd: The Modern Online Voting System**
+<img src="https://github.com/nezuuuuuuu/ElectEd/blob/Frontend-Dashboard-VotePage-CandidatePage-Nov27-nico/static/landingpics/adminlogo.svg" alt="ElectEd Logo" width="250" height="auto" />
 
-Welcome to **ElectEd**, the online voting platform designed to revolutionize university elections. With a focus on **simplicity**, **security**, and **scalability**, ElectEd ensures a seamless voting experience for students and administrators alike.
+Welcome to **ElectEd**, the *Online Voting System* designed to revolutionize university elections. With a focus on **simplicity**, **security**, and **scalability**, ElectEd ensures a seamless voting experience for students and administrators alike.
 
 ---
 
