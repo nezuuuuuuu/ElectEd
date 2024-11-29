@@ -19,3 +19,5 @@ class CandidateAdminForm(forms.ModelForm):
                 self.fields['position'].queryset = Position.objects.none()
         elif self.instance.pk:
             self.fields['position'].queryset = self.instance.election.positions.all()
+
+

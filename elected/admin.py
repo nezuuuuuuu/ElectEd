@@ -12,3 +12,5 @@ class CustomAdminSite(AdminSite):
         return context
     
 admin_site = CustomAdminSite()
+
+

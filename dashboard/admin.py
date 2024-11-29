@@ -12,6 +12,9 @@ class PositionInline(admin.TabularInline):
 class ElectionAdmin(admin.ModelAdmin):
     inlines = [PositionInline]
     list_display = ('title', 'description')
+    class Media:
+        js = ('admin/js/custom_admin.js',)
+
 
 class PositionAdmin(admin.ModelAdmin):
     list_display = ('title', 'get_election_title') 
@@ -57,7 +60,8 @@ class CandidateAdmin(admin.ModelAdmin):
         super().save_model(request, obj, form, change)
 
     class Media:
-        js = ('admin/js/admin_candidate.js',)
+       js = ('admin/js/electionDropDown.js',)
+
 
 
 class StudentAdmin(admin.ModelAdmin):
