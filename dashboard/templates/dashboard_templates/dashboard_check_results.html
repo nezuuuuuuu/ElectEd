@@ -23,25 +23,30 @@
 
 {% block body %}
 <section class='flex flex-col justify-center max-w-5xl py-12 mx-auto xl:py-0 mb-28 '>
-    <h1 class='pt-2 pl-6 mb-4 text-4xl font-bold text-maroon px-28'>
-        Congratulations to the winners of <span class="text-dmaroon">{{ election.title }}</span>!
-    </h1>
+    <div class="flex justify-between items-center relative px-8 pt-2 pl-6  mb-4 pb-20" >
+        <button class="absolute mx-8 my-8 font-bold top-4 right-4" onclick="window.history.back()">
+            <img src="{% static 'landingpics/arrowleft.png' %}" class="object-cover h-full p-3 rounded-lg border-maroon hover:bg-maroon/30" alt="No Image">
+        </button>
+        <h1 class='text-4xl font-bold text-maroon px-28'>
+            Congratulations to the winners of <span class="text-dmaroon">{{ election.title }}</span>!
+        </h1>
+    </div>
     
     {% for position in positions %}
-    <div class='flex flex-col items-start gap-3 pt-20'>
+    <div class='flex flex-col items-start gap-3'>
         <!-- Button to toggle candidates visibility -->
         <button id="toggleButton-{{ position.id }}" class="mx-28 pl-2 py-1 text-maroon font-bold text-lg flex items-center rounded-lg hover:bg-maroon/10">
             <span id="arrow-{{ position.id }}" class="text-xl w-8 text-center">&#9654;</span>  <!-- Default arrow -->
             <h1 class='text-2xl font-bold text-dmaroon px-4'>{{ position.title }}</h1>
         </button>
 
-        <div id="candidatesContainer-{{ position.id }}" class="flex flex-col gap-4 px-28" style="display: none;">
+        <div id="candidatesContainer-{{ position.id }}" class="flex flex-col gap-4 px-28 py-4" style="display: none;">
             {% for candidate in candidates %}
                 {% if candidate.position == position and candidate.election == election %}
                     <!-- Different styles for winners and non-winners -->
                     <div class="flex items-center justify-between w-full px-10 gap-40 transition-shadow border-2 rounded-lg shadow hover:shadow-lg 
                         {% if candidate.is_winner %}
-                            bg-maroon/10 border-maroon 
+                            bg-maroon/15 border-maroon 
                         {% else %}
                             bg-maroon/5 border-maroon scale-95 py-5
                         {% endif %}">

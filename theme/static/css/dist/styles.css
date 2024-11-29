@@ -1622,6 +1622,10 @@ select {
   background-color: rgb(164 28 48 / var(--tw-bg-opacity)) /* #a41c30 */;
 }
 
+.bg-maroon\/20 {
+  background-color: rgb(164 28 48 / 0.2);
+}
+
 .hover\:bg-maroon\/30:hover {
   background-color: rgb(164 28 48 / 0.3);
 }
@@ -1837,6 +1841,9 @@ select {
   background-color: rgb(164 28 48 / 0.1);
 }
 
+.bg-maroon\/15 {
+  background-color: rgb(164 28 48 / 0.15);
+}
 .bg-maroon\/20 {
   background-color: rgb(164 28 48 / 0.20);
 }
@@ -2067,6 +2074,14 @@ select {
 .pb-2 {
   padding-bottom: 0.5rem /* 8px */;
 }
+.pb-6 {
+  padding-bottom: 1.5rem /* 24px */;
+}
+
+.pb-12 {
+  padding-bottom: 3rem /* 48px */;
+}
+
 
 .pb-20 {
   padding-bottom: 5rem /* 80px */;

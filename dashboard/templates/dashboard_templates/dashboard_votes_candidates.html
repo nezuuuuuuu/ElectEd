@@ -29,13 +29,25 @@
     {% block body %}
     <section class='flex flex-col justify-center max-w-5xl py-12 mx-auto xl:py-0'>
        {%if disabled == 'disabled' %}
-        <h1 class='pt-2 pl-6 mb-4 text-4xl font-bold text-maroon px-28'>
-            Your vote is recorded.<span class="text-dmaroon"> Thank you for participating!</span>
-        </h1>
+        <div class="flex justify-between items-center relative px-8 pt-2 pl-6  mb-4 pb-20">
+            <button class="absolute mx-8 my-8 font-bold top-4 right-4" onclick="window.history.back()">
+                <img src="{% static 'landingpics/arrowleft.png' %}" class="object-cover h-full p-3 rounded-lg border-maroon hover:bg-maroon/30" alt="No Image">
+            </button>
+            <h1 class='text-4xl font-bold text-maroon px-28'>
+                Your vote is recorded.<span class="text-dmaroon"> Thank you for participating!</span>
+            </h1>
+        </div>
+
         {% else %}
-        <h1 class='pt-2 pl-6 mb-4 text-4xl font-bold text-maroon px-28'>
-            CAST YOUR VOTES NOW for <span class="text-dmaroon">{{ election.title }}</span>!
-        </h1>
+        <div class="flex justify-between items-center relative px-8 pt-2 pl-6  mb-4 pb-20">
+            <button class="absolute mx-8 my-8 font-bold top-4 right-4" onclick="window.history.back()">
+                <img src="{% static 'landingpics/arrowleft.png' %}" class="object-cover h-full p-3 rounded-lg border-maroon hover:bg-maroon/30" alt="No Image">
+            </button>
+            <h1 class='text-4xl font-bold text-maroon px-28'>
+                CAST YOUR VOTES NOW for <span class="text-dmaroon">{{ election.title }}</span>!
+            </h1>
+        </div>
+       
         {% endif %}
         {% for position in positions %}
         <div class='flex flex-col items-center justify-center gap-3 pt-10 text-center'>
