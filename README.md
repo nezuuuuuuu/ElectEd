@@ -109,10 +109,4 @@ Welcome to **ElectEd**, the online voting platform designed to revolutionize uni
 
 
 
-  
----
-## 🚀 **Transforming Elections, One Vote at a Time**
 
-ElectEd combines modern technology with the principles of democracy to create an inclusive, efficient, and trustworthy voting platform.
-
----
