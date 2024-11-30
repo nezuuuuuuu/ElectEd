@@ -167,14 +167,19 @@ def votes_candidates(request, election_id):
         vote_slip = ''
         isDisabled= ''  
         voted_candidate_ids=''  
-        
+
+    # Check if there are no positions or candidates
+    no_positions = not positions.exists()
+    no_candidates = not candidates.exists()     
 
     context = {
         'election': election,
         'positions': positions,
         'candidates': candidates,
         'disabled' : isDisabled,
-        'voted_ids': voted_candidate_ids
+        'voted_ids': voted_candidate_ids,
+        'no_positions': no_positions,
+        'no_candidates': no_candidates,
         
 
     }
@@ -359,11 +364,17 @@ def results_page(request, election_id):
             for canidate in candidates:
                 if canidate.position==position :
                     position.has_candidates=True
+
+    # Check if there are no positions or candidates
+    no_positions = not positions.exists()
+    no_candidates = not candidates.exists()
         
 
     context = {
         'election': election,
         'positions': positions, 
         'candidates': candidates,
+        'no_positions': no_positions,
+        'no_candidates': no_candidates,
     }
     return render(request, 'dashboard_templates/dashboard_check_results.html',  context | get_user_info(request))

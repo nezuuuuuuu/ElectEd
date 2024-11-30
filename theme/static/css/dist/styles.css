@@ -1168,12 +1168,21 @@ select {
   padding-left: 3rem /* 20px */;
 }
 
-
-
-.pl-6 {
-  padding-left: 3rem /* 20px */;
+.pl-10 {
+  padding-left: 2.5rem /* 40px */;
 }
 
+.pl-24 {
+  padding-left: 6rem /* 96px */;
+}
+
+.pl-28 {
+  padding-left: 7rem /* 112px */;
+}
+
+.pl-32 {
+  padding-left: 8rem /* 128px */;
+}
 
 
 .block {

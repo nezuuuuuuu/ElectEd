@@ -36,7 +36,9 @@
             <h1 class='text-4xl font-bold text-maroon px-28'>
                 Your vote is recorded.<span class="text-dmaroon"> Thank you for participating!</span>
             </h1>
+            
         </div>
+        
         {%elif election.is_close%}
             <div class="flex justify-between items-center relative px-8 pt-2 pl-6  mb-4 pb-20">
                 <button class="absolute mx-8 my-8 font-bold top-4 right-4" onclick="window.history.back()">
@@ -55,15 +57,37 @@
                 CAST YOUR VOTES NOW for <span class="text-dmaroon">{{ election.title }}</span>!
             </h1>
         </div>
-       
         {% endif %}
+
+        {% if no_positions and no_candidates %}
+        <div class="pl-28 ml-4 flex items-center gap-2 w-full">
+            <img src="{% static 'landingpics/empty_icon.png' %}" alt="Empty icon" class="w-12 h-auto">
+            <p class="text-maroon text-sm font-medium">No available position or candidate for this election.</p>
+        </div>
+        {% elif no_positions %}
+            <div class="pl-28 ml-4 flex items-center gap-2 w-full">
+                <img src="{% static 'landingpics/empty_icon.png' %}" alt="Empty icon" class="w-12 h-auto">
+                <p class="text-maroon text-sm font-medium">No available positions for this election.</p>
+            </div>
+        {% elif no_candidates %}
+            <div class="pl-28 ml-4 flex items-center gap-2 w-full">
+                <img src="{% static 'landingpics/empty_icon.png' %}" alt="Empty icon" class="w-12 h-auto">
+                <p class="text-maroon text-sm font-medium">No available candidates for this election.</p>
+            </div>
+        {% endif %}
+
+        
+
         {% for position in positions %}
         <div class='flex flex-col items-center justify-center gap-3 pt-10 text-center'>
             <h1 class='pt-2 pl-6 mb-4 text-2xl font-bold text-dark-maroon px-28'>{{ position.title }}</h1>
             <div class='container grid w-3 grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 mb-28 px-28 xl:grid-cols-3'>
                 {%if not position.has_candidates%}
-
-                no candidates for {{position.title}}
+                <div class="ml-4 flex justify-center items-center gap-2 w-full">
+                    <img src="{% static 'landingpics/empty_icon.png' %}" alt="Empty icon" class="w-12 h-auto" >
+                    <p class="text-maroon text-sm font-medium">No candidates for {{position.title}} position.</p>
+                </div>
+                
                 {%endif%}
                 {% for candidate in candidates %}
                    
