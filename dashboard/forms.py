@@ -5,7 +5,7 @@ from .models import Candidate, Position, Election
 class CandidateAdminForm(forms.ModelForm):
     class Meta:
         model = Candidate
-        fields = ['name','partylist', 'course', 'year', 'election', 'position', 'image', 'platforms']
+        fields = ['name','partylist', 'course', 'year', 'election', 'position', 'image', 'platforms','vote_count']
 
     def __init__(self, *args, **kwargs):
         super(CandidateAdminForm, self).__init__(*args, **kwargs)
