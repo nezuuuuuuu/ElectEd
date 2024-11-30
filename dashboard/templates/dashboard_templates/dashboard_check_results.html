@@ -33,6 +33,7 @@
     </div>
     
     {% for position in positions %}
+
     <div class='flex flex-col items-start gap-3'>
         <!-- Button to toggle candidates visibility -->
         <button id="toggleButton-{{ position.id }}" class="mx-28 pl-2 py-1 text-maroon font-bold text-lg flex items-center rounded-lg hover:bg-maroon/10">
@@ -41,6 +42,12 @@
         </button>
 
         <div id="candidatesContainer-{{ position.id }}" class="flex flex-col gap-4 px-28 py-4" style="display: none;">
+            {% if not position.has_candidates %}
+
+            no candidates for {{position.title}}
+
+            {%endif%}
+
             {% for candidate in candidates %}
                 {% if candidate.position == position and candidate.election == election %}
                     <!-- Different styles for winners and non-winners -->

@@ -119,7 +119,8 @@ def votes_candidates(request, election_id):
     search_query = request.GET.get('q', '').strip()
     current_time =now()
     election.is_close = election.close_date < current_time
-     
+    
+    
 
     # Filter candidates based on the current election and search query
     if search_query:
@@ -138,6 +139,14 @@ def votes_candidates(request, election_id):
         )
     else:
         candidates = Candidate.objects.filter(election=election)
+
+    for position in positions:
+        position.has_candidates=False
+        for canidate in candidates:
+            if canidate.position==position :
+                position.has_candidates=True
+    
+
 
     # Pass the filtered candidates, positions, and election to the template
     isDisabled= ''
@@ -345,6 +354,12 @@ def results_page(request, election_id):
     candidates = Candidate.objects.filter(election=election).order_by('-vote_count')
     print('11111')
 
+    for position in positions:
+            position.has_candidates=False
+            for canidate in candidates:
+                if canidate.position==position :
+                    position.has_candidates=True
+        
 
     context = {
         'election': election,
