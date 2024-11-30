@@ -305,12 +305,17 @@ def update_results(election):
     # Get all positions for the election
     positions = Position.objects.filter(election=election)
 
+   
+
     for position in positions:
+         
         # Get the candidates for the current position, ordered by vote count (highest to lowest)
         candidates = Candidate.objects.filter(position=position, election=election).order_by('-vote_count')
-
-        # Get the number of winners for this position based on max_selection
         max_winners = position.max_selection
+        if len(candidates) <= max_winners:
+            continue
+        # Get the number of winners for this position based on max_selection
+       
 
         # Find the vote count of the last possible winner (the one at the `max_winners` position)
         if len(candidates) > max_winners:
@@ -331,7 +336,7 @@ def update_results(election):
 def results_page(request, election_id):
     election = get_object_or_404(Election, id=election_id)
     print('11111')
-    # update_results(election)
+    update_results(election)
     print('11111')
 
     positions = Position.objects.filter(election=election)
