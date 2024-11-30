@@ -28,7 +28,7 @@
 
     {% block body %}
     <section class='flex flex-col justify-center max-w-5xl py-12 mx-auto xl:py-0'>
-       {%if disabled == 'disabled' %}
+       {%if disabled == 'disabled'%}
         <div class="flex justify-between items-center relative px-8 pt-2 pl-6  mb-4 pb-20">
             <button class="absolute mx-8 my-8 font-bold top-4 right-4" onclick="window.history.back()">
                 <img src="{% static 'landingpics/arrowleft.png' %}" class="object-cover h-full p-3 rounded-lg border-maroon hover:bg-maroon/30" alt="No Image">
@@ -37,7 +37,15 @@
                 Your vote is recorded.<span class="text-dmaroon"> Thank you for participating!</span>
             </h1>
         </div>
-
+        {%elif election.is_close%}
+            <div class="flex justify-between items-center relative px-8 pt-2 pl-6  mb-4 pb-20">
+                <button class="absolute mx-8 my-8 font-bold top-4 right-4" onclick="window.history.back()">
+                    <img src="{% static 'landingpics/arrowleft.png' %}" class="object-cover h-full p-3 rounded-lg border-maroon hover:bg-maroon/30" alt="No Image">
+                </button>
+                <h1 class='text-4xl font-bold text-maroon px-28'>
+                    You did not vote in this election.<span class="text-dmaroon"></span>
+                </h1>
+            </div>
         {% else %}
         <div class="flex justify-between items-center relative px-8 pt-2 pl-6  mb-4 pb-20">
             <button class="absolute mx-8 my-8 font-bold top-4 right-4" onclick="window.history.back()">
@@ -85,33 +93,7 @@
                             <div class="container flex flex-row justify-center gap-2">
                                 <a>
                                     
-                                    {% if disabled == 'disabled' %}
-                                    {% with already_matched=False %}
-                                        {% for id in voted_ids %}
-                                      
-                                                <!-- {% if not already_matched and candidate.id|stringformat:"s" == id %}
-                                                    <button 
-                                                        class="vote-button  px-12 py-2 mb-2 font-medium rounded-full bg-dmaroon text-white2 w-36" disabled>
-                                                        <span class="text-2xl font-bold">✔</span>        
-                                                    </button>
-                                                    {% with True as already_matched %}
-                                               
-                                                    {% endwith %}
-                                                {% endif %} -->
-
-                                               
-
-                                                <!-- {% if forloop.last and already_matched %}
-                                                <button 
-                                                onclick="selectCandidate('{{position.title }}','{{position.max_selection}}', '{{ candidate.name }}','{{candidate.id}}', this)" 
-                                                class="vote-button hover:bg-maroon2 active:bg-dmaroon focus:bg-dmaroon px-12 py-2 mb-2 font-medium rounded-full bg-maroon text-white2 w-36">
-            
-                                                Vote
-                                                </button>
-                                                
-                                                {% endif %} -->
-                                        <!-- {% endfor %}
-                                        {% endwith %} -->
+                                    {% if disabled == 'disabled' or election.is_close  %}
                                     
 
                                     {% else %}
@@ -151,7 +133,7 @@
           
 
 
-        {% if disabled == 'disabled' %}
+        {% if disabled == 'disabled' or election.is_close %}
         <button onclick="resetChanges()" class="w-60 px-2 py-2 my-2 font-medium border-0 rounded-full opacity-0" disabled>
         </button>
         <div class="flex items-center justify-between gap-10 ">
@@ -434,7 +416,7 @@
         }
 
 
-if('{{disabled}}'=='disabled'){
+if('{{disabled}}' == 'disabled' || '{{election.is_close}}'){
  var countDownDate = new Date("{{ election.close_date|date:'M d, Y H:i:s' }}").getTime();
  //alert(countDownDate)
 // Update the count down every 1 second

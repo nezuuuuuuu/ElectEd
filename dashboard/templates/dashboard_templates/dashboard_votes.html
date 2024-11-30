@@ -31,7 +31,7 @@
             <!-- CARDS -->
             <div class='container grid w-3 grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 mb-28 px-28 xl:grid-cols-3'>
                 {% for election in elections %}
-                    {% if elections.exists and not election.is_future %}
+                    {% if elections.exists and election.is_present %}
                    
                         <a href="{% url 'votes_candidates' election.id %}">
                             <div class="flex flex-col justify-center h-full overflow-hidden text-center border-4 items-left border-maroon rounded-xl text-maroon w-60 transition-shadow transition-transform transform hover:shadow-2xl hover:scale-105 relative">
@@ -107,6 +107,47 @@
             </div>
         </div>
     </section>
+
+
+
+
+    <section class='flex flex-col justify-center max-w-5xl py-12 mx-auto xl:py-0'>
+        <h1 class='pt-2 pl-6 mb-4 text-2xl font-bold text-maroon px-28'>Closed Elections</h1>
+        <div class='flex flex-col items-center justify-center gap-3 pt-10 text-center'>
+
+          
+            <!-- CARDS -->
+            <div class='container grid w-3 grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 mb-28 px-28 xl:grid-cols-3'>
+                {% for election in elections %}
+                    {% if election.is_close %}
+                   
+                        <a href="{% url 'votes_candidates' election.id %}">
+                            <div class="flex flex-col justify-center h-full overflow-hidden text-center border-4 items-left border-maroon rounded-xl text-maroon w-60 transition-shadow transition-transform transform hover:shadow-2xl hover:scale-105 relative">
+                                <!-- CONTAINER -->
+                                {% if election.image %}
+                                <div class="relative w-full h-40 overflow-hidden">
+                                    <img src="{{ election.image.url }}" class="absolute inset-0 object-cover w-full h-full" alt="{{ election.title }}">
+                                </div>
+                                {% else %}
+                                <div class="relative w-full h-40 overflow-hidden">
+                                    <img src="{% static 'landingpics/teamf  ogi.png' %}" class="absolute inset-0 object-cover w-full h-full" alt="No image available">
+                                </div>
+                                {% endif %}
+                                <div class='py-2 pl-5 text-left'>
+                                    <h1 class='py-0 text-2xl font-bold text-left bg-white text-maroon'>{{ election.title }}</h1>
+                                    <p class='py-0 text-xs font-medium text-left bg-white text-grey'><small>{{ election.description }}</small></p>
+                                </div>
+                            </div>
+                        </a>
+                    {% elif not elections.exists  %}
+                        <p class="font-bold text-black">Closed elections found matching "{{ request.GET.q|default:'' }}".</p>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+
     
     
     
