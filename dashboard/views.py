@@ -72,19 +72,24 @@ def votes(request):
 
     student = get_object_or_404(Student, student_id=Logged_id)
     try:
-        elections = Election.objects.filter(departments__contains=student.department)
+        elections = Election.objects.filter(
+             Q(departments__regex=fr'(^|,){student.department}($|,)')  # Match exact value
+            )
+        
         for election in elections:
+            print(election)
+            print(f' {election.departments}')
             election.is_future =election.open_date > current_time 
             election.is_close = election.close_date < current_time
             election.is_present = election.open_date <= current_time <= election.close_date
 
-            print(f'{election.is_close} closed')
-            # print(f'open {election.title} {election.open_date}')
-            # print(f'curr {current_time}')
+            # print(f'{election.is_close} closed')
+            # # print(f'open {election.title} {election.open_date}')
+            # # print(f'curr {current_time}')
 
 
              # Add logic here
-            print(  election.is_future)
+            # print(  election.is_future)
             if(election.is_future):
                 is_future_ctr+=1
                
