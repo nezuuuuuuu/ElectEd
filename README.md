@@ -28,7 +28,7 @@
 - **Description**: The system supports a clear distinction between elections based on their current status. Elections are categorized into three types:
   - **Active Election**: These are elections that are currently ongoing. Students can cast their votes during this period.
   - **Upcoming Election**: These are elections that are scheduled to take place in the future. Administrators can manage and prepare for these elections in advance, but students cannot vote yet.
-  - **Inactive Election**: Elections that have already concluded or are no longer active. No further actions (like voting) are allowed, but the results can be viewed.
+  - **Closed Election**: Elections that have already concluded or are no longer active. No further actions (like voting) are allowed, but the results can be viewed.
 
 ### 4. Voting Process
 - **Description**: The system provides a secure and user-friendly interface for students to vote for their preferred candidates during the election period.
@@ -38,10 +38,6 @@
 
 ### 6. Role-based Access Control
 - **Description**: The system have role-based access, allowing different users (students and administrators) to access specific features. Administrators manage elections, while students can only vote and view results.
-
-### 7. Election Reports Generation
-- **Description**: The system generates detailed reports after the election, including voting statistics, voter turnout, and a breakdown of votes for each candidate.
-
 
 ---
 
