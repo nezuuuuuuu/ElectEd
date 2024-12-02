@@ -71,14 +71,23 @@ def votes(request):
     is_future_ctr=0
 
     student = get_object_or_404(Student, student_id=Logged_id)
+   
+
     try:
         elections = Election.objects.filter(
-             Q(departments__regex=fr'(^|,){student.department}($|,)')  # Match exact value
+              Q(departments__regex=fr'(^|,){student.department}($|,)')  # Match exact value
             )
-        
+        query = request.GET.get('q', '')
+        if query:
+            elections = elections.filter(
+                Q(title__icontains=query) | 
+                Q(description__icontains=query)
+                
+            )
+
         for election in elections:
-            print(election)
-            print(f' {election.departments}')
+            # print(election)
+            # print(f' {election.departments}')
             election.is_future =election.open_date > current_time 
             election.is_close = election.close_date < current_time
             election.is_present = election.open_date <= current_time <= election.close_date
@@ -88,7 +97,7 @@ def votes(request):
             # # print(f'curr {current_time}')
 
 
-             # Add logic here
+            # Add logic here
             # print(  election.is_future)
             if(election.is_future):
                 is_future_ctr+=1
@@ -98,14 +107,7 @@ def votes(request):
     except Exception as e:
         elections=''
     # Search functionality
-    query = request.GET.get('q', '')
-    if query:
-        elections = elections.filter(
-            Q(title__icontains=query) | 
-            Q(description__icontains=query)
-            
-        )
-
+   
     context = {
         'elections': elections,
         'is_future_ctr':is_future_ctr
@@ -129,6 +131,7 @@ def votes_candidates(request, election_id):
 
     # Filter candidates based on the current election and search query
     if search_query:
+      
         candidates = Candidate.objects.filter(
             
 
