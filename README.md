@@ -99,7 +99,8 @@
 
 - [**Entity-Relationship Diagram (ERD)**](https://lucid.app/lucidchart/6e09249c-0f5d-4596-8974-a15dbbba42b6/edit?viewport_loc=-1128%2C-686%2C3054%2C1441%2C0_0&invitationId=inv_816a19d8-e5e5-4b98-b584-7c563652fcbf)  
 - [**UI/UX Design (Figma)**](https://www.figma.com/design/7Ea0jiaHDyttc6uYgjvAzE/FIGMA-PROJECTS?node-id=746-955&t=6q5gjlDmc9mi06Cr-1)  
-- [**Gantt Chart**](https://cebuinstituteoftechnology-my.sharepoint.com/:x:/g/personal/johnmark_econar_cit_edu/EbW35uG6l5REuPsFjlDHpuQBZt89CwVZcSAsOVjD5R5soA?e=SK6QRP)  
+- [**Gantt Chart Online**](https://cebuinstituteoftechnology-my.sharepoint.com/:x:/g/personal/johnmark_econar_cit_edu/EbW35uG6l5REuPsFjlDHpuQBZt89CwVZcSAsOVjD5R5soA?e=SK6QRP)
+- [**Gantt Chart PDF**](https://github.com/nezuuuuuuu/ElectEd/blob/Master/Gantt%20Chart%20(ElectEd).pdf)
 
 ---
 
